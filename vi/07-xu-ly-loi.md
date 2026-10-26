@@ -234,6 +234,8 @@ Thường thì một lớp ngoại lệ duy nhất là đủ cho một vùng cod
 
 ## Định nghĩa luồng bình thường
 
+![Định nghĩa luồng bình thường](assets/illustrations/07-define-the-normal-flow.png){w=181}
+
 Nếu làm theo lời khuyên ở các mục trên, bạn sẽ tách được khá rõ logic nghiệp vụ và phần xử lý lỗi. Phần lớn code của bạn sẽ bắt đầu giống một thuật toán sạch, không trang trí. Tuy vậy, quá trình này đẩy việc phát hiện lỗi ra rìa chương trình. Bạn bọc các API bên ngoài để có thể ném ngoại lệ của riêng mình, và định nghĩa một bộ xử lý phía trên code để giải quyết mọi phép tính bị hủy giữa chừng. Hầu hết thời gian, đây là cách làm hay, nhưng có những lúc bạn có thể không muốn hủy.
 
 Hãy xem một ví dụ. Đây là đoạn code khá vụng về để tính tổng chi phí trong một ứng dụng xuất hóa đơn:

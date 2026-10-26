@@ -46,6 +46,8 @@ Sau khi hoàn thành bài tập về những tuệ giác cao siêu này, tôi đ
 
 # Lời giới thiệu
 
+![Minh họa: WTFs/minute](assets/illustrations/00-introduction-wtfs.png){w=324}
+
 *Hình minh họa: (c) 2008 Focus Shift. Được sử dụng lại với sự cho phép của Thom Holwerda.*
 *http://www.osnews.com/story/19266/WTFs_m*
 
@@ -96,5 +98,8 @@ Lỗ đen siêu khối lượng nuốt trọn cả những ngôi sao vào bữa 
 Hình M104 trên bìa là sự kết hợp giữa bức ảnh ánh sáng khả kiến nổi tiếng của Hubble (bên phải) và bức ảnh hồng ngoại gần đây của đài quan sát quỹ đạo Spitzer (dưới, bên phải). Chính bức ảnh hồng ngoại cho thấy rõ thiên hà có cấu trúc vành. Trong ánh sáng khả kiến, ta chỉ thấy mép trước của vành in thành bóng đen. Phần phình trung tâm che khuất phần còn lại của vành.
 
 Nhưng trong ảnh hồng ngoại, các hạt nóng trong vành xuyên qua phần phình trung tâm. Ghép hai bức ảnh lại, ta có góc nhìn chưa từng thấy trước đây, và có thể suy ra rằng từ rất lâu rồi nơi này từng là một lò lửa hoạt động dữ dội.
+
+![Ảnh Hubble](assets/illustrations/00-cover-photo-1.png){w=168}
+![Ảnh Spitzer](assets/illustrations/00-cover-photo-2.png){w=168}
 
 *Ảnh bìa: © Spitzer Space Telescope*

@@ -182,6 +182,8 @@ final String outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();
 
 ### Tàu hỏa trật bánh
 
+![Tàu hỏa trật bánh](assets/illustrations/06-train-wrecks.png){w=180}
+
 Kiểu mã này thường được gọi là tàu hỏa trật bánh vì nó trông như một đống toa tàu móc nối vào nhau. Những chuỗi gọi như thế thường bị coi là phong cách cẩu thả và nên tránh [G36]. Thường tốt nhất là tách chúng ra như sau:
 
 ```java

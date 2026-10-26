@@ -339,6 +339,8 @@ public class Assert {
 
 Những hàm này có sự gần gũi mạnh về khái niệm vì chúng dùng chung một cách đặt tên và thực hiện những biến thể của cùng một nhiệm vụ cơ bản. Việc chúng gọi nhau chỉ là chuyện phụ. Kể cả khi không gọi nhau, chúng vẫn muốn ở gần nhau.
 
+![Khoảng cách dọc](assets/illustrations/05-vertical-distance.png){w=139}
+
 ### Thứ tự dọc
 
 Nói chung, chúng ta muốn các phụ thuộc gọi hàm hướng xuống dưới. Nghĩa là hàm được gọi nên nằm dưới hàm gọi nó[^2]. Điều này tạo ra một dòng chảy đẹp từ mức cao xuống mức thấp trong module mã nguồn.
@@ -540,6 +542,8 @@ while (dis.read(buf, 0, readBufferSize) != -1)
 ```
 
 ## Quy tắc của nhóm
+
+![Quy tắc của nhóm](assets/illustrations/05-team-rules.png){w=177}
 
 Tiêu đề mục này là một cách chơi chữ. Mỗi lập trình viên có bộ quy tắc định dạng ưa thích của riêng mình, nhưng nếu làm việc trong một nhóm thì quy tắc của nhóm là trên hết.
 

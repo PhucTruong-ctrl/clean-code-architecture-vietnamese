@@ -22,6 +22,9 @@ Hãy nhớ rằng code chính là ngôn ngữ cuối cùng chúng ta dùng để
 
 Gần đây tôi đọc lời tựa cuốn *Implementation Patterns* của Kent Beck.[^1] Ông viết: “... cuốn sách này dựa trên một tiền đề khá mong manh: rằng code tốt có ý nghĩa ...” Một tiền đề mong manh ư? Tôi không đồng ý! Theo tôi, đó là một trong những tiền đề vững chắc, được ủng hộ rộng rãi và bị lạm dụng nhiều nhất trong nghề của chúng ta (và tôi nghĩ Kent biết điều đó). Chúng ta biết code tốt có ý nghĩa vì đã quá lâu phải sống chung với sự thiếu vắng nó.
 
+![Kent Beck](assets/illustrations/01-kent-beck.png){w=144}
+
+
 Tôi biết một công ty vào cuối thập niên 80 đã viết ra một ứng dụng cực kỳ ăn khách. Sản phẩm rất phổ biến, được nhiều chuyên gia mua và sử dụng. Rồi các chu kỳ phát hành bắt đầu kéo dài. Lỗi không được sửa từ bản phát hành này sang bản tiếp theo. Thời gian tải tăng lên, số lần sụp cũng nhiều hơn. Tôi nhớ ngày mình tắt sản phẩm trong cơn bực bội và không bao giờ dùng lại. Không lâu sau, công ty phá sản.
 
 Hai thập kỷ sau, tôi gặp một trong những nhân viên đầu tiên của công ty ấy và hỏi chuyện gì đã xảy ra. Câu trả lời xác nhận nỗi lo của tôi. Họ vội đưa sản phẩm ra thị trường và để lại một mớ hỗn độn khổng lồ trong code. Càng thêm tính năng, code càng tệ, cho đến khi họ không còn quản lý nổi. Chính code xấu đã kéo công ty xuống.
@@ -93,6 +96,8 @@ Nói ngắn gọn, lập trình viên viết code sạch là một nghệ sĩ c�
 
 Có lẽ mỗi lập trình viên có một định nghĩa riêng. Vì vậy, tôi đã hỏi một số lập trình viên nổi tiếng, giàu kinh nghiệm xem họ nghĩ gì.
 
+![Bjarne Stroustrup](assets/illustrations/01-bjarne-stroustrup.png){w=144}
+
 **Bjarne Stroustrup, người phát minh ra C++ và tác giả cuốn *The C++ Programming Language***
 
 > Tôi muốn code của mình vừa thanh lịch vừa hiệu quả. Logic phải thẳng thắn để lỗi khó ẩn nấp, phụ thuộc phải tối thiểu để dễ bảo trì, xử lý lỗi phải đầy đủ theo một chiến lược rõ ràng, hiệu năng phải gần mức tối ưu để người ta không bị cám dỗ làm code bừa bộn bằng những tối ưu hóa thiếu nguyên tắc. Mã sạch làm tốt một việc.
@@ -107,6 +112,8 @@ Bjarne còn nói xử lý lỗi phải đầy đủ. Điều đó đòi hỏi k�
 
 Bjarne kết luận rằng code sạch làm tốt một việc. Không phải ngẫu nhiên mà nhiều nguyên lý thiết kế phần mềm có thể gói gọn trong lời khuyên giản dị ấy. Nhiều tác giả đã cố truyền đạt cùng một ý. Code xấu cố làm quá nhiều việc, khiến ý định lẫn lộn và mục đích mơ hồ. Mã sạch tập trung. Mỗi hàm, lớp hay module đều thể hiện một mục đích duy nhất, không bị những chi tiết xung quanh làm phân tâm hay vấy bẩn.
 
+![Grady Booch](assets/illustrations/01-grady-booch.png){w=150}
+
 **Grady Booch, tác giả cuốn *Object Oriented Analysis and Design with Applications***
 
 > Mã sạch đơn giản và trực tiếp. Mã sạch đọc như văn xuôi được viết khéo. Mã sạch không bao giờ che khuất ý đồ của người thiết kế, mà đầy những trừu tượng sắc nét và những dòng điều khiển thẳng thắn.
@@ -116,6 +123,8 @@ Grady nêu một số ý giống Bjarne, nhưng nhìn từ góc độ khả năn
 Đọc code sạch sẽ không bao giờ giống hẳn đọc *Lord of the Rings*. Dù vậy, ẩn dụ văn chương ấy không tồi. Như một cuốn tiểu thuyết hay, code sạch phải làm lộ rõ những căng thẳng trong bài toán cần giải. Nó phải đẩy những căng thẳng ấy lên cao trào, rồi để người đọc thốt lên “À! Dĩ nhiên rồi!” khi vấn đề được giải quyết và một lời giải hiển nhiên hiện ra.
 
 Tôi thấy cách Grady dùng cụm “trừu tượng sắc nét” (crisp abstraction) thật thú vị, gần như một nghịch hợp! Suy cho cùng, “crisp” gần nghĩa với “concrete”. Từ điển trên MacBook của tôi định nghĩa “crisp” là quyết đoán nhanh gọn, thực tế, không do dự hay thêm chi tiết thừa. Hai nghĩa tưởng như trái ngược ấy lại truyền tải một thông điệp mạnh mẽ. Code phải thực tế, không suy đoán. Nó chỉ nên chứa những gì cần thiết. Người đọc phải thấy rằng chúng ta đã quyết đoán.
+
+![Dave Thomas](assets/illustrations/01-dave-thomas.png){w=144}
 
 **“Big” Dave Thomas, người sáng lập OTI, cha đỡ đầu của chiến lược Eclipse**
 
@@ -129,6 +138,8 @@ Dave dùng từ “tối giản” hai lần. Có vẻ ông coi trọng code nh�
 
 Dave cũng nói code phải có tính văn học. Đây là cách nhắc nhẹ đến lập trình văn học của Knuth.[^4] Nói cách khác, code phải được viết sao cho con người có thể đọc.
 
+![Michael Feathers](assets/illustrations/01-michael-feathers.png){w=161}
+
 **Michael Feathers, tác giả cuốn *Working Effectively with Legacy Code***
 
 > Tôi có thể kể ra mọi phẩm chất mình thấy ở mã sạch, nhưng có một phẩm chất bao trùm dẫn đến tất cả những phẩm chất kia. Mã sạch luôn trông như được viết bởi một người quan tâm. Không có điều gì hiển nhiên bạn có thể làm để khiến nó tốt hơn. Tác giả code đã nghĩ đến tất cả những điều đó. Nếu bạn thử hình dung cách cải thiện, cuối cùng bạn lại trở về chỗ cũ, ngồi trân trọng đoạn code người khác để lại, đoạn code của một người thực sự quan tâm đến tay nghề.
@@ -136,6 +147,8 @@ Dave cũng nói code phải có tính văn học. Đây là cách nhắc nhẹ �
 Một từ: quan tâm. Đó chính là chủ đề của cuốn sách này. Có lẽ phụ đề phù hợp là *Cách quan tâm đến code*.
 
 Michael nói trúng phóc. Mã sạch là code đã được chăm chút. Có người dành thời gian giữ nó đơn giản, ngăn nắp và chú ý đúng mức đến từng chi tiết. Họ đã quan tâm.
+
+![Ron Jeffries](assets/illustrations/01-ron-jeffries.png){w=143}
 
 **Ron Jeffries, tác giả cuốn *Extreme Programming Installed* và *Extreme Programming Adventures in C#***
 
@@ -164,6 +177,8 @@ Ron bắt đầu sự nghiệp lập trình bằng Fortran tại Strategic Air C
 
 Chỉ trong vài đoạn ngắn, Ron đã tóm tắt nội dung cuốn sách này: không trùng lặp, mỗi thứ làm một việc, diễn đạt rõ ràng, trừu tượng nhỏ. Đủ cả.
 
+![Ward Cunningham](assets/illustrations/01-ward-cunningham.png){w=144}
+
 **Ward Cunningham, người phát minh ra Wiki và Fit, đồng phát minh eXtreme Programming. Động lực đằng sau *Design Patterns*. Người dẫn dắt tư tưởng Smalltalk và OO. Cha đỡ đầu của tất cả những ai quan tâm đến code.**
 
 > Bạn biết mình đang làm việc với mã sạch khi mỗi thủ tục bạn đọc đều đúng như mong đợi. Có thể gọi code là đẹp khi nó còn khiến ngôn ngữ trông như được tạo ra cho bài toán.
@@ -177,6 +192,8 @@ Ward cho rằng khi đọc code sạch, bạn sẽ không ngạc nhiên chút n�
 Còn quan niệm về cái đẹp của Ward thì sao? Chúng ta vẫn phàn nàn rằng ngôn ngữ không được thiết kế cho bài toán của mình. Nhưng Ward đặt trách nhiệm trở lại lên chúng ta. Ông nói code đẹp khiến ngôn ngữ trông như được tạo ra cho bài toán. Vậy chúng ta phải làm cho ngôn ngữ trông đơn giản! Những kẻ cuồng ngôn ngữ khắp nơi, hãy coi chừng! Chính lập trình viên, chứ không phải ngôn ngữ, khiến chương trình trông đơn giản.
 
 ## Các trường phái
+![Uncle Bob](assets/illustrations/01-uncle-bob.png){w=144}
+
 
 Còn tôi (Uncle Bob) nghĩ mã sạch là gì? Cuốn sách này sẽ trình bày thật chi tiết quan niệm của tôi và các đồng nghiệp về mã sạch. Chúng tôi sẽ nói điều gì tạo nên tên biến, hàm, lớp sạch và những thứ tương tự. Chúng tôi sẽ nêu ý kiến như những chân lý tuyệt đối, không xin lỗi vì giọng điệu gay gắt. Ở thời điểm này trong sự nghiệp, với chúng tôi, chúng là chân lý. Đó là trường phái của chúng tôi về mã sạch.
 

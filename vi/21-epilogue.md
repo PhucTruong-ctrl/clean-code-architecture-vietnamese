@@ -6,4 +6,6 @@ Nhưng rồi một chuyện lạ xảy ra. Tôi nhận ra mình không thể th�
 
 Thế nên nó vẫn ở trên cổ tay tôi. Khi viết code, tôi thấy nó ở đó trong tầm mắt ngoại vi. Nó là lời nhắc thường trực về lời hứa tôi đã tự đặt cho mình là viết mã sạch.
 
+![Clean Code](assets/illustrations/21-epilogue-badge.png){w=200}
+
 [^1]: http://www.qualitytree.com/

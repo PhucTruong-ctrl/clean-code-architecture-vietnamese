@@ -98,6 +98,8 @@ else
 
 Có thể bạn nghĩ đây là ví dụ bịa, nhưng chúng tôi từng thấy những đoạn mã đầy những cái tên như vậy. Có lần, tác giả đề nghị đổi sang phông chữ khác để các ký tự trông khác nhau hơn. Giải pháp ấy sẽ phải được truyền lại cho mọi nhà phát triển về sau, bằng lời hoặc bằng văn bản. Đổi tên là đủ để xử lý dứt điểm vấn đề, không cần tạo thêm tài liệu hay sản phẩm nào.
 
+![Tránh tên gây hiểu lầm](assets/illustrations/02-avoid-disinformation.png){w=169}
+
 ## Tạo ra những khác biệt có nghĩa
 
 Lập trình viên tự gây rắc rối khi viết mã chỉ để làm vừa lòng trình biên dịch hoặc trình thông dịch. Chẳng hạn, vì không thể dùng cùng một tên cho hai thứ khác nhau trong cùng phạm vi, ta có thể tùy tiện sửa một cái tên. Đôi khi người ta còn viết sai chính tả tên đó, dẫn đến tình huống trớ trêu: sửa lỗi chính tả xong thì mã không biên dịch được nữa.[^2]
@@ -283,6 +285,8 @@ Complex fulcrumPoint = new Complex(23.0);
 Hãy cân nhắc buộc người dùng gọi các phương thức ấy bằng cách đặt những hàm khởi tạo tương ứng ở mức private.
 
 ## Đừng tỏ ra dí dỏm
+
+![Đừng tỏ ra dí dỏm](assets/illustrations/02-dont-be-cute.png){w=180}
 
 Tên quá khéo léo chỉ dễ nhớ với những người có cùng khiếu hài hước với tác giả, và chỉ khi họ còn nhớ câu đùa. Họ có biết hàm tên HolyHandGrenade dùng để làm gì không? Đúng là nghe vui, nhưng ở đây DeleteItems có lẽ sẽ là cái tên tốt hơn. Hãy chọn sự rõ ràng thay vì tính giải trí.
 

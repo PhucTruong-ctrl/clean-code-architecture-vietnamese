@@ -86,6 +86,9 @@
   \renewcommand{\headrulewidth}{0pt}%
 }
 \pagestyle{main}
+% The original edition starts chapters and front-matter sections on the next
+% page, whatever its parity: no blank verso pages are inserted.
+\renewcommand{\cleardoublepage}{\clearpage}
 \renewcommand{\chaptermark}[1]{%
   \markboth{Chương \thechapter: #1}{}}
 \renewcommand{\sectionmark}[1]{\markright{#1}}
@@ -200,6 +203,14 @@
 \newcommand{\ccopenerimage}[2]{%
   \par\addvspace{1pt}%
   {\centering\includegraphics[width=#2]{#1}\par}%
+  \addvspace{2pt}%
+}
+
+% Uncaptioned inline illustration from the original edition (portraits,
+% cartoons, cover photos).  #1 = path, #2 = width with unit.
+\newcommand{\ccillustration}[2]{%
+  \par\addvspace{2pt}%
+  {\centering\includegraphics[width=#2,keepaspectratio]{#1}\par}%
   \addvspace{2pt}%
 }
 

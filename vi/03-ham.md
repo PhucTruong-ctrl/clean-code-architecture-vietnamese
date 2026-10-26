@@ -139,6 +139,8 @@ public static String renderPageWithSetupsAndTeardowns(
 
 ## Làm một việc
 
+![Làm một việc](assets/illustrations/03-do-one-thing.png){w=127}
+
 Phải thấy rõ rằng Đoạn mã 3-1 đang làm nhiều hơn một việc. Nó tạo bộ đệm, lấy trang, tìm các trang kế thừa, kết xuất đường dẫn, nối những chuỗi bí hiểm và sinh HTML, cùng nhiều việc khác. Đoạn mã 3-1 rất bận rộn với hàng loạt việc khác nhau. Ngược lại, Đoạn mã 3-3 chỉ làm một việc đơn giản. Nó chèn phần thiết lập và dọn dẹp vào các trang kiểm thử.
 
 Lời khuyên sau đây đã xuất hiện dưới hình thức này hay hình thức khác suốt 30 năm hoặc hơn.
@@ -262,6 +264,8 @@ Trong Đoạn mã 3-7, tôi đổi tên hàm ví dụ từ testableHtml thành S
 Chọn những cái tên mô tả sẽ làm thiết kế của module rõ ràng hơn trong đầu bạn và giúp bạn cải thiện nó. Không hiếm chuyện săn tìm một cái tên hay lại dẫn đến một lần tái cấu trúc có lợi cho mã.
 
 Hãy nhất quán trong cách đặt tên. Dùng cùng những cụm từ, danh từ và động từ trong tên các hàm bạn chọn cho module của mình. Chẳng hạn, hãy xét các tên includeSetupAndTeardownPages, includeSetupPages, includeSuiteSetupPage và includeSetupPage. Cách dùng từ tương tự trong những cái tên ấy cho phép cả chuỗi ấy kể nên một câu chuyện. Thật vậy, nếu tôi chỉ đưa bạn xem chuỗi trên, bạn sẽ tự hỏi: “Thế includeTeardownPages, includeSuiteTeardownPage và includeTeardownPage đâu rồi?” Thấy chưa, đúng là “. . . hóa ra đúng như bạn mong đợi.”
+
+![Dùng tên mô tả](assets/illustrations/03-use-descriptive-names.png){w=141}
 
 ## Đối số của hàm
 
@@ -515,6 +519,8 @@ public enum Error {
 Những lớp như thế là một nam châm hút phụ thuộc; rất nhiều lớp khác buộc phải import và dùng chúng. Vì vậy, khi enum Error thay đổi, tất cả những lớp kia đều phải biên dịch lại và triển khai lại[^11]. Điều này tạo áp lực tiêu cực lên lớp Error. Lập trình viên không muốn thêm lỗi mới vì khi ấy họ phải build lại và triển khai lại mọi thứ. Thế là họ tái sử dụng những mã lỗi cũ thay vì thêm mã mới.
 
 Khi dùng ngoại lệ thay cho mã lỗi, những ngoại lệ mới là lớp dẫn xuất của lớp ngoại lệ. Có thể thêm chúng mà không buộc phải biên dịch lại hay triển khai lại bất cứ thứ gì[^12].
+
+![Error.java](assets/illustrations/03-error-java.png){w=173}
 
 ## Đừng lặp lại chính mình
 

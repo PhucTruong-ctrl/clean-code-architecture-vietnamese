@@ -168,6 +168,8 @@ Tất nhiên, có một rủi ro đáng kể là chú thích làm rõ lại sai.
 
 ### Cảnh báo hậu quả
 
+![Cảnh báo hậu quả](assets/illustrations/04-warning-of-consequences.png){w=169}
+
 Đôi khi hữu ích khi cảnh báo các lập trình viên khác về những hậu quả nhất định. Chẳng hạn, đây là chú thích giải thích vì sao một ca kiểm thử cụ thể bị tắt:
 
 ```java

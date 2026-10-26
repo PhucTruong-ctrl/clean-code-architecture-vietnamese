@@ -6,13 +6,14 @@ Bản dịch trọn vẹn cuốn *Clean Code: A Handbook of Agile Software Craft
 
 | Đường dẫn | Nội dung |
 |---|---|
-| `CleanCode-vi.pdf` / `out/CleanCode-vi.pdf` | Bản PDF hoàn chỉnh: 445 trang, khổ 517.61 × 666.36 bp |
+| `CleanCode-vi.pdf` / `out/CleanCode-vi.pdf` | Bản PDF hoàn chỉnh: 437 trang, khổ 517.61 × 666.36 bp |
 | `vi/*.md` | Bản dịch Markdown theo chương, nguồn chân lý của văn bản |
 | `build/md2tex.py` | Converter Markdown → LaTeX viết riêng, không dùng pandoc |
 | `tex/cleanbook.tex` | Preamble: geometry, font, chapter opener, code box, TOC, running heads |
 | `build.sh` | Build toàn sách: `./build.sh` |
 | `assets/openers/` | 17 minh họa mở chương trích từ PDF gốc |
-| `assets/figures/` | 10 hình trong sách trích từ PDF gốc |
+| `assets/figures/` | 10 hình có đánh số trong sách, trích từ PDF gốc |
+| `assets/illustrations/` | 22 minh họa không chú thích: chân dung các tác giả, tranh dí dỏm, ảnh bìa, huy hiệu Lời kết |
 
 ## Build
 
@@ -31,5 +32,6 @@ Yêu cầu: TeX Live với XeLaTeX, font Liberation Serif / Liberation Sans / Li
 - Chỉ mục cuối sách của bản gốc được lược bỏ (gắn với số trang bản tiếng Anh). Các dẫn chiếu "trang N" trong sách vẫn là số trang bản tiếng Anh.
 - Không dùng dấu gạch ngang dài (em dash) trong văn xuôi.
 - Các câu thơ, trích dẫn tiếng nước ngoài giữ nguyên bản gốc; chú thích và giải thích đã dịch.
+- Hình có chú thích dùng `**Hình X-Y**`; minh họa không chú thích dùng `![alt](assets/illustrations/<ten>.png){w=<bề rộng bp>}`. Converter chèn ảnh căn giữa, không in alt text.
 
 Xem `vi/22-ve-ban-dich.md` để biết ghi chú của người dịch in ở cuối sách.

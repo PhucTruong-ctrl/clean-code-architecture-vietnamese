@@ -387,6 +387,7 @@ FENCE_RE = re.compile(r"^(\s{0,3})```\s*([A-Za-z0-9_+-]*)\s*$")
 HR_RE = re.compile(r"^\s*([-*_])\s*(?:\1\s*){2,}$")
 BOLD_LINE_RE = re.compile(r"^\*\*(.+?)\*\*\s*$")
 CAPTION_RE = re.compile(r"^(Đoạn mã|Hình|Bảng)\b")
+IMG_RE = re.compile(r"^!\[([^\]]*)\]\(([^)\s]+)\)(?:\{([^}]*)\})?\s*$")
 BIB_RE = re.compile(r"^\[([^\]]+)\]:\s*(.*)$")
 
 
@@ -501,6 +502,15 @@ def parse_blocks(lines):
                 math.append(lines[i])
                 i += 1
             blocks.append(Block("math", math))
+            continue
+
+        im = IMG_RE.match(line.strip())
+        if im:
+            blocks.append(Block("image", [line],
+                                extra={"alt": im.group(1),
+                                       "src": im.group(2),
+                                       "opts": im.group(3) or ""}))
+            i += 1
             continue
 
         # paragraph
@@ -635,6 +645,8 @@ class Renderer:
             return "\\par\\addvspace{6pt}\\[%s\\]\\addvspace{6pt}\n" % body
         if kind == "figure":
             return self._figure(blk, ctx)
+        if kind == "image":
+            return self._image(blk, ctx)
         raise ConvertError("unknown block %r" % kind)
 
     # -- headings ----------------------------------------------------------
@@ -652,6 +664,16 @@ class Renderer:
         if level == 4:
             return "\\ccsubsubsection{%s}{%s}\n" % (toc, title)
         return "\\ccparagraph{%s}\n" % title
+
+    # -- inline illustrations ----------------------------------------------
+    def _image(self, blk, ctx):
+        src = blk.extra["src"]
+        opts = blk.extra.get("opts") or ""
+        m = re.search(r"w=([0-9.]+)", opts)
+        width = "%.1fbp" % float(m.group(1)) if m else "0.5\\linewidth"
+        return ("\\par\\addvspace{8pt}\n"
+                "\\ccillustration{%s}{%s}\n"
+                "\\addvspace{8pt}\n" % (src, width))
 
     # -- figures -----------------------------------------------------------
     _FIG_RE = re.compile(r"^\*\*Hình\s+([0-9]+-[0-9]+|[A-Z]-[0-9]+)\*\*")
