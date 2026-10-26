@@ -242,7 +242,7 @@ class Inline:
                 trail = raw[-1] + trail
                 raw = raw[:-1]
             return self._hold(r"\url{%s}" % raw) + trail
-        text = re.sub(r"https?://[^\s\"<>\x00-\x1f]+", url, text)
+        text = re.sub(r"https?://[^\s\"<>\x00-\x1f*]+", url, text)
 
         # 6. inline links and images
         def link(m):
@@ -265,15 +265,86 @@ class Inline:
         # 8. escape everything that is left
         text = tex_escape(text)
 
-        # 9. emphasis (markdown flanking rules, so `N * T` stays literal)
-        text = re.sub(r"(?<!\*)\*\*(?![\s*])(.+?)(?<![\s*])\*\*(?!\*)",
-                      r"\\textbf{\1}", text)
-        text = re.sub(r"(?<![\w*])\*(?![\s*])(.+?)(?<![\s*])\*(?![\w*])",
-                      r"\\emph{\1}", text)
+        # 9. emphasis: a small delimiter parser so nested forms such as
+        #    **Author, author of *Book*** render as bold + italic in bold
+        #    (a single regex cannot match the ambiguous *** run).
+        text = self._emphasis(text)
         # 10. a literal ellipsis
         text = text.replace("...", r"\ldots{}")
 
         return self._restore(text)
+
+    # -- emphasis ----------------------------------------------------------
+    @staticmethod
+    def _emphasis(text: str) -> str:
+        """Convert *em* / **strong** / ***both*** with flanking rules.
+
+        Runs of asterisks are matched with a stack, so an outer ** may contain
+        an inner * and the closing run *** can close both.  Unmatched runs are
+        restored to literal asterisks.
+        """
+        out = []
+        stack = []          # (kind, out_index, literal) literal=None: revert by parent
+        i, n = 0, len(text)
+
+        def literal(entry):
+            kind, idx, lit = entry
+            if lit is not None:
+                out[idx] = lit
+
+        while i < n:
+            if text[i] != "*":
+                out.append(text[i])
+                i += 1
+                continue
+            j = i
+            while j < n and text[j] == "*":
+                j += 1
+            run = j - i
+            prev = text[i - 1] if i > 0 else " "
+            nxt = text[j] if j < n else " "
+            can_open = nxt not in " \t\n"
+            can_close = prev not in " \t\n"
+
+            lit = "*" * run
+            # close first: a closing run may close several openers
+            while can_close and run > 0 and stack:
+                kind = stack[-1][0]
+                need = 2 if kind == "strong" else 1
+                if run < need:
+                    break
+                stack.pop()
+                out.append("}")
+                run -= need
+            if run > 0:
+                opened = []     # (kind, command, literal-or-None)
+                while run > 0:
+                    if run >= 3:
+                        opened.append(("strong", r"\textbf{\emph{", "***"))
+                        opened.append(("em", None, None))
+                        run -= 3
+                    elif run == 2:
+                        opened.append(("strong", r"\textbf{", "**"))
+                        run -= 2
+                    else:
+                        opened.append(("em", r"\emph{", "*"))
+                        run -= 1
+                if opened and can_open:
+                    for kind, cmd, lit in opened:
+                        if cmd is not None:
+                            stack.append((kind, len(out), lit))
+                            out.append(cmd)
+                        else:
+                            stack.append((kind, len(out), None))
+                else:
+                    for kind, _, lit in opened:
+                        if lit is not None:
+                            out.append(lit)
+            i = j
+        # unmatched openers become literal asterisks again
+        while stack:
+            literal(stack.pop())
+        return "".join(out)
 
     @staticmethod
     def strip_footnotes(text: str) -> str:
