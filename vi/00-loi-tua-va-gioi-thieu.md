@@ -2,19 +2,19 @@
 
 > Tác giả: James O. Coplien, Mørdrup, Đan Mạch
 
-Ở Đan Mạch, một trong những viên kẹo chúng tôi thích nhất là Ga-Jol. Mùi cam thảo nồng của nó hợp một cách hoàn hảo với tiết trời ẩm ướt và thường lạnh lẽo nơi đây. Với người Đan Mạch chúng tôi, một phần duyên dáng của Ga-Jol nằm ở những câu danh ngôn thông thái hoặc dí dỏm in trên nắp mỗi hộp. Sáng nay tôi mua một gói hai viên và thấy trên đó in câu ngạn ngữ Đan Mạch cổ này:
+Ở Đan Mạch, Ga-Jol là một trong những loại kẹo chúng tôi yêu thích. Mùi cam thảo nồng của nó rất hợp với tiết trời ẩm ướt và thường lạnh lẽo nơi đây. Với người Đan Mạch, một phần sức hấp dẫn của Ga-Jol nằm ở những câu danh ngôn sâu sắc hoặc dí dỏm in trên nắp mỗi hộp. Sáng nay tôi mua một gói hai viên và thấy trên đó in câu ngạn ngữ Đan Mạch cổ này:
 
 > Ærlighed i små ting er ikke nogen lille ting.
 >
 > ("Trung thực trong những việc nhỏ không phải là việc nhỏ.")
 
-Đó là điềm lành, hợp với điều tôi vốn muốn nói ở đây: những việc nhỏ có ý nghĩa. Cuốn sách này nói về những mối quan tâm khiêm nhường nhưng giá trị chẳng hề nhỏ.
+Thật đúng lúc: câu ấy nói đúng điều tôi muốn chia sẻ ở đây. Những việc nhỏ có ý nghĩa. Cuốn sách này bàn về những điều tưởng chừng nhỏ nhặt nhưng có giá trị không hề nhỏ.
 
-"Thượng đế nằm trong chi tiết", kiến trúc sư Ludwig Mies van der Rohe từng nói. Câu nói ấy gợi lại những tranh luận hiện nay về vai trò của kiến trúc trong phát triển phần mềm, nhất là trong thế giới Agile. Bob và tôi đôi khi say sưa tham gia cuộc đối thoại này. Mies van der Rohe quả thật coi trọng công năng và những hình thức xây dựng vượt thời gian, nền tảng của kiến trúc lớn. Ông còn tự tay chọn từng tay nắm cửa cho mọi ngôi nhà mình thiết kế. Vì sao? Vì những việc nhỏ có ý nghĩa.
+Kiến trúc sư Ludwig Mies van der Rohe từng nói: "Thượng đế hiện diện trong từng chi tiết", ý nói vẻ đẹp và giá trị của một công trình thể hiện qua sự chăm chút cho những điều nhỏ nhất. Câu nói ấy gợi tôi nhớ đến những cuộc tranh luận về vai trò của kiến trúc trong phát triển phần mềm, nhất là trong cộng đồng Agile. Bob và tôi đôi khi cũng say sưa tham gia những cuộc đối thoại đó. Mies van der Rohe coi trọng công năng và những hình thức xây dựng vượt thời gian làm nên các công trình kiến trúc lớn. Nhưng ông cũng đích thân chọn từng tay nắm cửa cho mỗi ngôi nhà mình thiết kế. Vì sao? Vì những điều nhỏ nhặt cũng quan trọng.
 
-Trong cuộc "tranh luận" vẫn tiếp diễn về TDD, Bob và tôi nhận ra rằng cả hai đều đồng ý: kiến trúc phần mềm có vị trí quan trọng trong quá trình phát triển, dù có lẽ chúng tôi hình dung khác nhau về ý nghĩa cụ thể của nó. Những bất đồng như vậy không mấy quan trọng, bởi ta có thể mặc nhiên cho rằng người làm nghề có trách nhiệm sẽ dành thời gian suy nghĩ và lập kế hoạch từ đầu dự án. Quan niệm cuối thập niên 1990, rằng thiết kế chỉ do kiểm thử và mã dẫn dắt, đã qua lâu rồi. Dẫu vậy, chú tâm đến chi tiết còn là nền tảng quan trọng hơn mọi tầm nhìn lớn lao của tính chuyên nghiệp. Trước hết, nhờ thực hành những việc nhỏ, người làm nghề mới có được sự thành thạo và niềm tin để làm việc lớn. Rồi chỉ một chút cẩu thả trong thi công, cánh cửa khép không kín, viên gạch lát hơi lệch, thậm chí chiếc bàn làm việc bừa bộn, cũng đủ làm mất vẻ duyên dáng của toàn thể. Đó là điều mã sạch hướng tới.
+Trong cuộc "tranh luận" chưa dứt về TDD, Bob và tôi nhận ra rằng cả hai đều coi kiến trúc phần mềm là một phần quan trọng của quá trình phát triển, dù có lẽ chúng tôi hiểu vai trò cụ thể của nó khác nhau. Những bất đồng ấy không quá quan trọng: ta có thể tin rằng người làm nghề có trách nhiệm sẽ dành thời gian suy nghĩ và lập kế hoạch từ đầu dự án. Quan niệm cuối thập niên 1990 rằng thiết kế chỉ nên được dẫn dắt bởi kiểm thử và mã đã qua lâu rồi. Dẫu vậy, sự chú tâm đến chi tiết còn quan trọng hơn mọi tầm nhìn lớn lao đối với tác phong chuyên nghiệp. Trước hết, qua việc rèn luyện ở những việc nhỏ, người làm nghề có được sự thành thạo và sự tin cậy cần thiết để làm những việc lớn. Hơn nữa, chỉ một chút cẩu thả trong thi công, một cánh cửa đóng không khít, một viên gạch lát hơi lệch, thậm chí một chiếc bàn làm việc bừa bộn, cũng đủ phá hỏng vẻ đẹp của cả công trình. Đó cũng là điều mã sạch hướng tới.
 
-Tuy vậy, kiến trúc chỉ là một ẩn dụ cho phát triển phần mềm, nhất là cho phần tạo ra sản phẩm ban đầu, như kiến trúc sư tạo nên một tòa nhà tinh khôi. Trong thời đại Scrum và Agile, người ta chú trọng đưa sản phẩm ra thị trường thật nhanh. Ta muốn nhà máy chạy hết tốc lực để sản xuất phần mềm. Nhưng đây là những nhà máy của con người: những người viết mã biết suy nghĩ, biết cảm nhận, làm việc từ product backlog hoặc user story để tạo ra sản phẩm. Ẩn dụ sản xuất vẫn in đậm trong lối nghĩ ấy. Scrum chịu ảnh hưởng nhiều từ khía cạnh sản xuất của ngành ô tô Nhật Bản, từ thế giới của dây chuyền lắp ráp.
+Tuy vậy, kiến trúc chỉ là một cách ví von về phát triển phần mềm, nhất là giai đoạn tạo ra sản phẩm ban đầu, tương tự như lúc kiến trúc sư bàn giao một tòa nhà mới hoàn thiện. Trong thời đại Scrum và Agile, người ta chú trọng đưa sản phẩm ra thị trường thật nhanh. Ta muốn nhà máy chạy hết tốc lực để sản xuất phần mềm. Nhưng đây là những nhà máy của con người: những người viết mã biết suy nghĩ, biết cảm nhận, dựa vào product backlog hoặc user story để tạo ra sản phẩm. Lối ví von với sản xuất vẫn in đậm trong cách nghĩ ấy. Scrum chịu nhiều ảnh hưởng từ hoạt động sản xuất ô tô của Nhật Bản, từ thế giới của dây chuyền lắp ráp.
 
 Thế nhưng ngay trong ngành ô tô, phần lớn công việc là bảo trì, hoặc tìm cách tránh phải bảo trì, chứ không phải sản xuất. Trong phần mềm, 80% công việc chúng ta làm, thậm chí hơn, vẫn được gọi theo cách hơi cổ là "bảo trì": sửa chữa. Thay vì theo lối nghĩ phương Tây điển hình, tập trung sản xuất phần mềm tốt, có lẽ chúng ta nên nghĩ như những người thợ sửa nhà trong ngành xây dựng hay thợ sửa ô tô. Các nhà quản lý Nhật Bản nói gì về chuyện đó?
 
@@ -93,13 +93,15 @@ Hình ảnh có gợi bạn nhớ đến vụ nổ của mặt trăng năng lư�
 
 Điều gì tạo nên vành đai quanh M104? Vì sao thiên hà có phần phình trung tâm lớn đến vậy nhưng nhân lại nhỏ và sáng đến thế? Với tôi, trông như thể lỗ đen trung tâm mất bình tĩnh rồi thổi thủng một lỗ rộng 30.000 năm ánh sáng giữa thiên hà. Khốn khổ cho bất kỳ nền văn minh nào có thể từng nằm trên đường đi của cơn biến động vũ trụ ấy.
 
-Lỗ đen siêu khối lượng nuốt trọn cả những ngôi sao vào bữa trưa, chuyển một phần đáng kể khối lượng của chúng thành năng lượng. E = MC2 đã đủ tạo ra sức mạnh lớn, nhưng khi M là khối lượng một ngôi sao thì hãy coi chừng! Bao nhiêu ngôi sao đã lao đầu vào cái mõm ấy trước khi con quái vật no nê? Kích thước khoảng trống ở tâm thiên hà có thể là một gợi ý chăng?
+Lỗ đen siêu khối lượng nuốt trọn cả những ngôi sao vào bữa trưa, chuyển một phần đáng kể khối lượng của chúng thành năng lượng. E = $MC^2$ đã đủ tạo ra sức mạnh lớn, nhưng khi M là khối lượng một ngôi sao thì hãy coi chừng! Bao nhiêu ngôi sao đã lao đầu vào cái mõm ấy trước khi con quái vật no nê? Kích thước khoảng trống ở tâm thiên hà có thể là một gợi ý chăng?
+
+![Ảnh Hubble](assets/illustrations/00-cover-photo-1.png){w=132 wrap=cover}
+![Ảnh Spitzer](assets/illustrations/00-cover-photo-2.png){w=132 wrap=cover}
+
+*Ảnh bìa: © Spitzer Space Telescope*
+
 
 Hình M104 trên bìa là sự kết hợp giữa bức ảnh ánh sáng khả kiến nổi tiếng của Hubble (bên phải) và bức ảnh hồng ngoại gần đây của đài quan sát quỹ đạo Spitzer (dưới, bên phải). Chính bức ảnh hồng ngoại cho thấy rõ thiên hà có cấu trúc vành. Trong ánh sáng khả kiến, ta chỉ thấy mép trước của vành in thành bóng đen. Phần phình trung tâm che khuất phần còn lại của vành.
 
 Nhưng trong ảnh hồng ngoại, các hạt nóng trong vành xuyên qua phần phình trung tâm. Ghép hai bức ảnh lại, ta có góc nhìn chưa từng thấy trước đây, và có thể suy ra rằng từ rất lâu rồi nơi này từng là một lò lửa hoạt động dữ dội.
 
-![Ảnh Hubble](assets/illustrations/00-cover-photo-1.png){w=168}
-![Ảnh Spitzer](assets/illustrations/00-cover-photo-2.png){w=168}
-
-*Ảnh bìa: © Spitzer Space Telescope*

@@ -265,7 +265,7 @@ public class HourlyEmployeeReport {
 
 Rõ ràng phương thức `reportHours` thèm muốn lớp `HourlyEmployee`. Mặt khác, ta không muốn `HourlyEmployee` phải biết định dạng báo cáo. Chuyển chuỗi định dạng vào lớp `HourlyEmployee` sẽ vi phạm một số nguyên tắc thiết kế hướng đối tượng.⁷ Làm vậy sẽ khiến `HourlyEmployee` phụ thuộc vào định dạng báo cáo, làm lớp này chịu ảnh hưởng mỗi khi định dạng thay đổi.
 
-⁷. Cụ thể là Nguyên tắc trách nhiệm đơn lẻ, Nguyên tắc đóng mở và Nguyên tắc đóng chung. Xem [PPP].
+⁷. Cụ thể là Nguyên tắc Trách nhiệm Đơn nhất, Nguyên tắc đóng mở và Nguyên tắc đóng chung. Xem [PPP].
 
 ### G15: Đối số chọn hành vi
 
@@ -594,9 +594,9 @@ private void calculateAndDeliverPay(Employee e) {
 
 Mỗi hàm trong số này chỉ làm một việc. (Xem “Làm một việc” ở trang 35.)
 
-### G31: Sự phụ thuộc thời điểm bị che giấu
+### G31: Sự phụ thuộc vào thời điểm bị che giấu
 
-Sự phụ thuộc thời điểm thường là cần thiết, nhưng đừng che giấu nó. Hãy sắp xếp các đối số của hàm sao cho thứ tự cần gọi các hàm trở nên hiển nhiên. Xét đoạn mã sau:
+Sự phụ thuộc vào thời điểm thường là cần thiết, nhưng đừng che giấu nó. Hãy sắp xếp các đối số của hàm sao cho thứ tự cần gọi các hàm trở nên hiển nhiên. Xét đoạn mã sau:
 
 ```java
 public class MoogDiver {
@@ -612,7 +612,7 @@ public class MoogDiver {
 }
 ```
 
-Thứ tự của ba hàm rất quan trọng. Phải làm bão hòa gradient trước rồi mới có thể nối các spline, sau đó mới được lặn tìm moog. Đáng tiếc là mã không áp đặt thứ tự phụ thuộc thời điểm này. Một lập trình viên khác có thể gọi `reticulateSplines` trước khi gọi `saturateGradient`, dẫn đến `UnsaturatedGradientException`. Cách tốt hơn là:
+Thứ tự của ba hàm rất quan trọng. Phải làm bão hòa gradient trước rồi mới có thể nối các spline, sau đó mới được lặn tìm moog. Đáng tiếc là mã không bảo đảm được thứ tự thực thi này. Một lập trình viên khác có thể gọi `reticulateSplines` trước khi gọi `saturateGradient`, dẫn đến `UnsaturatedGradientException`. Cách tốt hơn là:
 
 ```java
 public class MoogDiver {
@@ -628,11 +628,11 @@ public class MoogDiver {
 }
 ```
 
-Cách này làm lộ sự phụ thuộc thời điểm bằng cách tạo thành một dây chuyền. Mỗi hàm tạo ra kết quả mà hàm tiếp theo cần, vì thế không có cách hợp lý nào để gọi chúng sai thứ tự.
+Cách này làm lộ sự phụ thuộc vào thời điểm bằng cách tạo thành một dây chuyền. Mỗi hàm tạo ra kết quả mà hàm tiếp theo cần, vì thế không có cách hợp lý nào để gọi chúng sai thứ tự.
 
 Có thể bạn sẽ phàn nàn rằng cách này làm các hàm phức tạp hơn, và bạn nói đúng. Nhưng phần phức tạp cú pháp thêm vào phơi bày độ phức tạp thực sự về thời điểm của tình huống.
 
-Lưu ý rằng tôi vẫn giữ nguyên các biến thực thể. Tôi cho rằng các phương thức riêng trong lớp cần chúng. Dù vậy, tôi vẫn muốn để các đối số ở đó để thể hiện rõ sự phụ thuộc thời điểm.
+Lưu ý rằng tôi vẫn giữ nguyên các biến thực thể. Tôi cho rằng các phương thức riêng trong lớp cần chúng. Dù vậy, tôi vẫn muốn để các đối số ở đó để thể hiện rõ sự phụ thuộc vào thời điểm.
 
 ### G32: Đừng tùy tiện
 

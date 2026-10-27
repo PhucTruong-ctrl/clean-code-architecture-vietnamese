@@ -1,7 +1,7 @@
 %% cleanbook.tex -- driver for the Vietnamese edition of Clean Code.
 %%
-%% Build with  ./build.sh  (which runs build/md2tex.py and then xelatex
-%% twice).  The chapter bodies are generated fragments under build/gen/.
+%% Build with ./build.sh (tools/md2tex.py, then three XeLaTeX passes).
+%% Chapter bodies are generated fragments under build/gen/.
 %%
 %% Geometry, headings, code boxes, TOC and running heads are matched to the
 %% Pearson 2009 interior (517.608 x 666.36 pt, 360 pt measure, 10/12 Times).
@@ -41,6 +41,7 @@
 \fvset{breakanywheresymbolpre={},breakanywheresymbolpost={},
   breakbeforesymbolpre={},breakbeforesymbolpost={},
   breakaftersymbolpre={},breakaftersymbolpost={}}
+\usepackage{wrapfig}
 \usepackage{tabularx}
 \usepackage{xurl}
 \usepackage{enumitem}
@@ -212,6 +213,18 @@
   \par\addvspace{2pt}%
   {\centering\includegraphics[width=#2,keepaspectratio]{#1}\par}%
   \addvspace{2pt}%
+}
+
+% The two cover photographs wrap beside the paragraph describing the cover.
+\newcommand{\cccoverimages}[5]{%
+  \begin{wrapfigure}{r}{142bp}%
+    \centering
+    \includegraphics[width=#2,keepaspectratio]{#1}\par
+    \vspace{2pt}%
+    \includegraphics[width=#4,keepaspectratio]{#3}\par
+    \vspace{2pt}%
+    {\fontsize{8}{10}\selectfont #5\par}%
+  \end{wrapfigure}%
 }
 
 % Chapter epigraph: quotation right aligned, italic; attribution on the last
@@ -424,57 +437,56 @@ Không có lý do nào để làm bất cứ điều gì kém hơn mức tốt n
 \vspace{40pt}
 {\fontsize{10}{13}\selectfont Bản dịch tiếng Việt\par}
 \vspace{6pt}
-{\fontsize{9}{11}\selectfont Pearson Education\par}
+{\fontsize{9}{11}\selectfont Dùng cho mục đích học tập cá nhân\par}
 \vspace{14pt}
 \end{titlepage}
 
-% --- Copyright page: kept in English, as in the original (legal notice) -----
-% The original prints it on the verso of the title page, so only \clearpage.
+% --- Trang bản quyền ---
+% Giữ nguyên mã ISBN, địa chỉ và thông tin liên hệ của nhà xuất bản.
 \clearpage
 \thispagestyle{empty}
 \begingroup
 \fontsize{8.5}{10.5}\selectfont
 \setlength{\parindent}{0pt}
-\noindent Many of the designations used by manufacturers and sellers to distinguish
-their products are claimed as trademarks. Where those designations appear in
-this book, and the publisher was aware of a trademark claim, the designations
-have been printed with initial capital letters or in all capitals.\par
+\noindent Nhiều tên gọi mà nhà sản xuất và người bán dùng để phân biệt sản phẩm
+của họ được xác nhận là nhãn hiệu. Khi những tên gọi đó xuất hiện trong sách
+này và nhà xuất bản biết có yêu cầu bảo hộ nhãn hiệu, chúng được in hoa chữ cái
+đầu hoặc viết hoa toàn bộ.\par
 \vspace{5pt}
-\noindent The authors and publisher have taken care in the preparation of this book,
-but make no expressed or implied warranty of any kind and assume no
-responsibility for errors or omissions. No liability is assumed for incidental
-or consequential damages in connection with or arising out of the use of the
-information or programs contained herein.\par
+\noindent Các tác giả và nhà xuất bản đã cẩn trọng khi biên soạn cuốn sách này,
+nhưng không đưa ra bất kỳ bảo đảm nào, dù rõ ràng hay ngụ ý, và không chịu trách
+nhiệm về sai sót hoặc thiếu sót. Nhà xuất bản cũng không chịu trách nhiệm về
+thiệt hại ngẫu nhiên hay thiệt hại phát sinh từ việc sử dụng thông tin hoặc
+chương trình trong sách này.\par
 \vspace{5pt}
-\noindent The publisher offers excellent discounts on this book when ordered in
-quantity for bulk purchases or special sales, which may include electronic
-versions and/or custom covers and content particular to your business, training
-goals, marketing focus, and branding interests. For more information, please
-contact:\par
+\noindent Nhà xuất bản có chính sách giảm giá tốt khi đặt mua số lượng lớn hoặc
+đặt mua cho các đợt bán đặc biệt. Đơn hàng có thể bao gồm bản điện tử và/hoặc
+bìa cùng nội dung tùy chỉnh theo doanh nghiệp, mục tiêu đào tạo, định hướng
+tiếp thị và nhận diện thương hiệu của bạn. Để biết thêm thông tin, vui lòng
+liên hệ:\par
 \vspace{3pt}
-\hspace*{20pt}U.S. Corporate and Government Sales\\
+\hspace*{20pt}Bộ phận bán hàng doanh nghiệp và chính phủ Hoa Kỳ\\
 \hspace*{20pt}(800) 382-3419\\
 \hspace*{20pt}corpsales@pearsontechgroup.com\par
 \vspace{5pt}
-\noindent For sales outside the United States please contact:\par
+\noindent Khách hàng ngoài Hoa Kỳ vui lòng liên hệ bộ phận bán hàng quốc tế:\par
 \vspace{3pt}
 \hspace*{20pt}International Sales\\
 \hspace*{20pt}international@pearsoned.com\par
 \vspace{16pt}
 \noindent\rule{\textwidth}{0.5pt}\par
 \vfill
-\noindent Includes bibliographical references and index.\\
+\noindent Sách có danh mục tài liệu tham khảo và mục lục.\\
 ISBN-13: 978-0-13-235088-4\\
 ISBN-10: \quad 0-13-235088-2\par
 \vspace{5pt}
-\noindent Copyright \copyright{} 2009 Pearson Education, Inc.\par
+\noindent Bản quyền \copyright{} 2009 Pearson Education, Inc.\par
 \vspace{5pt}
-\noindent All rights reserved. Printed in the United States of America. This
-publication is protected by copyright, and permission must be obtained from the
-publisher prior to any prohibited reproduction, storage in a retrieval system,
-or transmission in any form or by any means, electronic, mechanical,
-photocopying, recording, or likewise. For information regarding permissions,
-write to:\par
+\noindent Bảo lưu mọi quyền. In tại Hoa Kỳ. Ấn phẩm này được bảo hộ bản quyền.
+Trước khi sao chép, lưu trữ trong hệ thống truy xuất hoặc truyền tải dưới bất
+kỳ hình thức hay phương tiện nào, như điện tử, cơ học, photocopy, ghi âm hoặc
+cách thức tương tự, ngoài phạm vi được phép, phải được nhà xuất bản chấp thuận.
+Mọi yêu cầu cấp phép xin gửi đến:\par
 \vspace{3pt}
 \hspace*{20pt}Pearson Education, Inc\\
 \hspace*{20pt}Rights and Contracts Department\\
@@ -485,10 +497,9 @@ write to:\par
 \noindent ISBN-13: 978-0-13-235088-4\\
 ISBN-10: \quad 0-13-235088-2\par
 \vspace{5pt}
-\noindent Text printed in the United States on recycled paper at Courier in
-Stoughton, Massachusetts.\par
+\noindent In trên giấy tái chế tại Courier, Stoughton, Massachusetts, Hoa Kỳ.\par
 \vspace{5pt}
-\noindent First printing, July 2008\par
+\noindent Ấn bản đầu tiên, tháng 7 năm 2008\par
 \vspace{12pt}
 \noindent\textit{Bản quyền bản gốc thuộc Pearson Education. Bản dịch này chỉ dùng
 cho mục đích học tập cá nhân.}\par

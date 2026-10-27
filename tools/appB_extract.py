@@ -2,8 +2,8 @@
 """Trich xuat Phu luc B (org.jfree.date.SerialDate) tu ban text cua PDF
 sang Markdown, GIU NGUYEN so dong in o le trai tung dong ma.
 
-Nguon : work/chapters/19-phu-luc-b-serialdate.txt (PDF trang 349-407)
-Dich   : vi/19-phu-luc-b-serialdate.md
+Nguồn: reference/original-extracts/19-phu-luc-b-serialdate.txt (PDF trang 349-407)
+Đầu ra: vi/19-phu-luc-b-serialdate.md
 
 Cau truc mot trang in: dong chay dau trang ("Appendix B: ...") + so folio
 (o mep phai hoac gan lien sau form-feed), caption "Listing B-x [(continued)]",
@@ -11,11 +11,13 @@ ten file, roi cac dong ma dang "  <so dong> <noi dung>".
 Cac dong ma bi PDF xuong dong (khong co so dong) duoc noi lai vao dong truoc.
 """
 
+from pathlib import Path
 import re
 import sys
 
-SRC = "work/chapters/19-phu-luc-b-serialdate.txt"
-OUT = "vi/19-phu-luc-b-serialdate.md"
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "reference/original-extracts/19-phu-luc-b-serialdate.txt"
+OUT = ROOT / "vi/19-phu-luc-b-serialdate.md"
 TITLE = "# Phụ lục B: org.jfree.date.SerialDate"
 
 CAPTION_RE = re.compile(r"^[ \t]*Listing B-(\d+)( \(continued\))?[ \t]*$")
@@ -264,11 +266,11 @@ def check_references(pages):
 
 
 def main():
-    text = open(SRC, encoding="utf-8").read()
+    text = SRC.read_text(encoding="utf-8")
     pages = parse_pages(text)
     md = build_markdown(pages)
-    with open(OUT, "w", encoding="utf-8") as f:
-        f.write(md)
+    OUT.write_text(md, encoding="utf-8")
+
 
     starts = sum(1 for p in pages if not p.continued)
     conts = sum(1 for p in pages if p.continued)

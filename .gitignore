@@ -6,12 +6,9 @@ out/
 __pycache__/
 *.pyc
 
+# Local workbench, extracted chunks, and one-off intermediate files
+/work/
+/finding.md
+
 # One-off extractions from the original PDF, superseded by assets/openers and assets/figures
-CleanCode-[0-9]*_1.*
-
-# Derived text extracts, regenerated from CleanCode.pdf with pdftotext / pdftohtml
-work/pdfxml/
-work/book.txt
-
-# Superseded translation chunks (merged into vi/14, vi/17, vi/18)
-work/chunk-*.md
+/CleanCode-[0-9]*_1.*

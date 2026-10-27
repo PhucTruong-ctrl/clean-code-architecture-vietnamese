@@ -541,11 +541,11 @@ while (dis.read(buf, 0, readBufferSize) != -1)
   ;
 ```
 
-## Quy tắc của nhóm
+## Luật chơi của nhóm
 
-![Quy tắc của nhóm](assets/illustrations/05-team-rules.png){w=177}
+![Luật chơi của nhóm](assets/illustrations/05-team-rules.png){w=177}
 
-Tiêu đề mục này là một cách chơi chữ. Mỗi lập trình viên có bộ quy tắc định dạng ưa thích của riêng mình, nhưng nếu làm việc trong một nhóm thì quy tắc của nhóm là trên hết.
+Mỗi lập trình viên có quy tắc định dạng mình thích. Nhưng khi làm việc trong nhóm thì phải theo luật chơi chung.
 
 Một nhóm phát triển nên thống nhất một phong cách định dạng duy nhất, rồi mọi thành viên trong nhóm đều dùng phong cách đó. Chúng ta muốn phần mềm có một phong cách nhất quán. Chúng ta không muốn nó trông như được viết bởi một đám người mỗi người một ý.
 

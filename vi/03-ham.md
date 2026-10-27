@@ -217,7 +217,7 @@ throws InvalidEmployeeType {
 }
 ```
 
-Hàm này có vài vấn đề. Thứ nhất, nó lớn, và khi có thêm loại nhân viên mới, nó sẽ phình ra. Thứ hai, rõ ràng nó làm nhiều hơn một việc. Thứ ba, nó vi phạm Nguyên lý Trách nhiệm Đơn (SRP)[^7] vì có nhiều hơn một lý do để nó thay đổi. Thứ tư, nó vi phạm Nguyên lý Mở/Đóng (OCP)[^8] vì nó buộc phải thay đổi mỗi khi thêm loại mới. Nhưng có lẽ vấn đề tệ nhất của hàm này là có vô số hàm khác sẽ có cùng cấu trúc. Chẳng hạn, ta có thể có `isPayday(Employee e, Date date)`, hoặc `deliverPay(Employee e, Money pay)`, hoặc cả một loạt hàm khác. Tất cả đều sẽ có cùng cấu trúc tai hại ấy.
+Hàm này có vài vấn đề. Thứ nhất, nó lớn, và khi có thêm loại nhân viên mới, nó sẽ phình ra. Thứ hai, rõ ràng nó làm nhiều hơn một việc. Thứ ba, nó vi phạm Nguyên tắc Trách nhiệm Đơn nhất (SRP)[^7] vì có nhiều hơn một lý do để nó thay đổi. Thứ tư, nó vi phạm Nguyên lý Mở/Đóng (OCP)[^8] vì nó buộc phải thay đổi mỗi khi thêm loại mới. Nhưng có lẽ vấn đề tệ nhất của hàm này là có vô số hàm khác sẽ có cùng cấu trúc. Chẳng hạn, ta có thể có `isPayday(Employee e, Date date)`, hoặc `deliverPay(Employee e, Money pay)`, hoặc cả một loạt hàm khác. Tất cả đều sẽ có cùng cấu trúc tai hại ấy.
 
 Giải pháp cho vấn đề này (xem Đoạn mã 3-5) là chôn câu lệnh switch dưới tầng hầm của một ABSTRACT FACTORY[^9], và không để ai nhìn thấy nó nữa. Nhà máy sẽ dùng câu lệnh switch để tạo các thực thể phù hợp của những lớp dẫn xuất từ Employee, còn các hàm khác nhau như calculatePay, isPayday và deliverPay sẽ được điều phối đa hình qua giao diện Employee.
 
@@ -352,7 +352,7 @@ Cái sau là ví dụ về dạng từ khóa của tên hàm. Dùng dạng này,
 
 ## Đừng gây tác dụng phụ
 
-Tác dụng phụ là những lời dối trá. Hàm của bạn hứa làm một việc, nhưng nó còn làm những việc ẩn giấu khác. Đôi khi nó tạo ra những thay đổi bất ngờ đối với các biến của chính lớp chứa nó. Đôi khi nó tạo ra những thay đổi ấy đối với các tham số được truyền vào hàm hoặc đối với biến toàn cục của hệ thống. Trong cả hai trường hợp, chúng đều là những lời dối trá xảo quyệt và tai hại, thường dẫn đến những mối ghép thời gian và những phụ thuộc thứ tự kỳ quặc.
+Tác dụng phụ là những lời dối trá. Hàm của bạn hứa làm một việc, nhưng nó còn làm những việc ẩn giấu khác. Đôi khi nó tạo ra những thay đổi bất ngờ đối với các biến của chính lớp chứa nó. Đôi khi nó tạo ra những thay đổi ấy đối với các tham số được truyền vào hàm hoặc đối với biến toàn cục của hệ thống. Trong cả hai trường hợp, chúng đều là những lời dối trá xảo quyệt và tai hại, thường dẫn đến những sự phụ thuộc bất thường vào thời điểm và thứ tự.
 
 Chẳng hạn, hãy xét hàm có vẻ vô hại trong Đoạn mã 3-6. Hàm này dùng một thuật toán chuẩn để ghép userName với mật khẩu. Nó trả về true nếu hai thứ khớp nhau và false nếu có gì sai. Nhưng nó còn có một tác dụng phụ. Bạn có nhận ra không?
 
@@ -380,7 +380,7 @@ public class UserValidator {
 
 Tác dụng phụ ấy là lời gọi Session.initialize(), dĩ nhiên rồi. Hàm checkPassword, qua cái tên của mình, nói rằng nó kiểm tra mật khẩu. Cái tên không hề ngụ ý rằng nó khởi tạo phiên làm việc. Vì thế, một người gọi tin vào điều tên hàm nói sẽ có nguy cơ xóa sạch dữ liệu phiên hiện có khi quyết định kiểm tra tính hợp lệ của người dùng.
 
-Tác dụng phụ này tạo ra một mối ghép thời gian. Nghĩa là checkPassword chỉ có thể được gọi vào những thời điểm nhất định (nói cách khác, khi khởi tạo phiên là an toàn). Nếu nó bị gọi sai thứ tự, dữ liệu phiên có thể bị mất ngoài ý muốn. Những mối ghép thời gian gây bối rối, nhất là khi bị giấu dưới dạng tác dụng phụ. Nếu buộc phải có một mối ghép thời gian, bạn nên làm rõ nó trong tên của hàm. Trong trường hợp này, có lẽ ta đổi tên hàm thành checkPasswordAndInitializeSession, dù làm vậy chắc chắn vi phạm “Làm một việc”.
+Tác dụng phụ này tạo ra sự phụ thuộc vào thời điểm. Nghĩa là checkPassword chỉ có thể được gọi vào những thời điểm nhất định (nói cách khác, khi khởi tạo phiên là an toàn). Nếu gọi sai thứ tự, dữ liệu phiên có thể bị mất ngoài ý muốn. Kiểu phụ thuộc này gây bối rối, nhất là khi bị giấu dưới dạng tác dụng phụ. Nếu buộc phải có kiểu phụ thuộc này, bạn nên làm rõ nó trong tên hàm. Trong trường hợp này, có lẽ ta đổi tên hàm thành checkPasswordAndInitializeSession, dù làm vậy chắc chắn vi phạm “Làm một việc”.
 
 ### Đối số đầu ra
 

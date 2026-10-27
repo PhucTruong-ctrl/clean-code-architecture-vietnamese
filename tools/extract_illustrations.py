@@ -6,7 +6,7 @@ and 22 uncaptioned illustrations (portraits, cartoons, cover photos).  The
 first two groups already live in assets/openers and assets/figures; this
 script extracts the third group at its printed display size.
 
-Run:  python3 work/extract_illustrations.py
+Run:  python3 tools/extract_illustrations.py
 """
 import re
 import subprocess

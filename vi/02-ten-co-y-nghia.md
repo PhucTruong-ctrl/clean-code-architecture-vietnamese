@@ -39,7 +39,7 @@ public List<int[]> getThem() {
 
 Vì sao khó nhận ra đoạn mã đang làm gì? Không có biểu thức phức tạp. Khoảng trắng và thụt lề đều hợp lý. Đoạn mã chỉ nhắc đến ba biến và hai hằng. Cũng chẳng có lớp cầu kỳ hay phương thức đa hình nào, chỉ có một danh sách các mảng, có vẻ vậy.
 
-Vấn đề không nằm ở sự đơn giản của mã, mà ở tính hàm ẩn của nó, nếu cho phép chúng tôi dùng từ này: mức độ mà bối cảnh không được thể hiện rõ ngay trong mã. Đoạn mã ngầm yêu cầu ta biết câu trả lời cho những câu hỏi như:
+Vấn đề không nằm ở việc mã đơn giản, mà ở mức độ ngầm ẩn của nó, nếu cho phép chúng tôi dùng từ này: mức độ mà bối cảnh không được thể hiện rõ ngay trong mã. Đoạn mã ngầm yêu cầu ta biết câu trả lời cho những câu hỏi như:
 
 1. theList chứa những thứ gì?
 2. Chỉ số 0 của một phần tử trong theList có ý nghĩa gì?
@@ -142,7 +142,7 @@ Con người giỏi xử lý từ ngữ. Một phần đáng kể bộ não dàn
 
 Tên khó phát âm khiến bạn khó bàn luận về nó mà không nghe như kẻ ngốc. “À, ở đằng này, trên cái bee cee arr three cee enn tee, chúng ta có một pee ess zee kyew int, thấy chưa?” Điều này quan trọng vì lập trình là hoạt động xã hội.
 
-Có một công ty tôi biết dùng tên genymdhms (generation date, year, month, day, hour, minute, and second: ngày giờ sinh, năm, tháng, ngày, giờ, phút, giây), nên mọi người đi quanh đọc nó là “gen why emm dee aich emm ess”. Tôi có thói quen khó chịu là đọc mọi thứ đúng như cách viết, nên bắt đầu gọi nó là “gen-yah-mudda-hims”. Sau đó, nhiều nhà thiết kế và chuyên viên phân tích cũng gọi theo tôi. Nghe vẫn ngớ ngẩn, nhưng chúng tôi cùng hiểu câu đùa nên thấy vui. Dù vui hay không, chúng tôi vẫn đang chấp nhận một cách đặt tên tồi. Lập trình viên mới phải được giải thích các biến, rồi họ gọi chúng bằng những từ bịa ngớ ngẩn thay vì dùng thuật ngữ tiếng Anh đúng nghĩa. Hãy so sánh:
+Có một công ty tôi biết đặt tên biến là genymdhms (ngày tạo, năm, tháng, ngày, giờ, phút và giây). Mọi người đọc các chữ cái viết tắt theo tên chữ cái tiếng Anh: “gen why emm dee aich emm ess”. Tôi có tật đọc mọi thứ đúng theo mặt chữ, nên gọi nó thành một âm nghe ngớ ngẩn: “gen-yah-mudda-hims”. Các nhà thiết kế và chuyên viên phân tích khác cũng bắt chước cách gọi ấy. Chúng tôi cùng hiểu trò đùa nên thấy vui. Dù vậy, cái tên vẫn tệ. Lập trình viên mới phải được giải thích các biến, rồi lại dùng những từ bịa đặt kỳ quặc thay vì thuật ngữ tiếng Anh thông dụng. Hãy so sánh:
 
 ```java
 class DtaRcrd102 {
@@ -164,7 +164,7 @@ class Customer {
 };
 ```
 
-Giờ ta có thể nói chuyện cho ra lẽ: “Này Mikey, xem bản ghi này đi! Dấu thời gian sinh lại được đặt vào ngày mai! Sao có thể thế được?”
+Giờ ta có thể nói chuyện cho ra lẽ: “Này Mikey, xem bản ghi này đi! Thời điểm tạo lại được đặt vào ngày mai! Sao có thể thế được?”
 
 ## Dùng tên tìm kiếm được
 

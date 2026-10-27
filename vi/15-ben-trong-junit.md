@@ -401,7 +401,7 @@ private int findCommonSuffix() {
 
 Chúng ta cũng nên đổi tên các biến thành viên cho chính xác hơn một chút [N1]; xét cho cùng, cả hai đều là chỉ số.
 
-Quan sát kỹ findCommonSuffix cho thấy một sự phụ thuộc thời điểm bị ẩn [G31]; nó phụ thuộc vào việc prefixIndex được tính bởi findCommonPrefix. Nếu gọi hai hàm này sai thứ tự, việc gỡ lỗi sẽ rất khó khăn. Vậy để làm lộ sự phụ thuộc thời điểm này, hãy cho findCommonSuffix nhận prefixIndex làm đối số.
+Quan sát kỹ findCommonSuffix cho thấy một sự phụ thuộc vào thời điểm bị che giấu [G31]; nó phụ thuộc vào việc prefixIndex được tính bởi findCommonPrefix. Nếu gọi hai hàm này sai thứ tự, việc gỡ lỗi sẽ rất khó khăn. Vậy để làm lộ sự phụ thuộc này, hãy cho findCommonSuffix nhận prefixIndex làm đối số.
 
 ```java
 private void compactExpectedAndActual() {

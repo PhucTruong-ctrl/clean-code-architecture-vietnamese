@@ -269,7 +269,7 @@ Bạn có tưởng tượng được cảnh làm việc trong một dự án mà
 
 Theo nhiều cách, cuốn sách này là “tiền truyện” của cuốn sách tôi viết năm 2002, *Agile Software Development: Principles, Patterns, and Practices* (PPP). PPP bàn về các nguyên lý thiết kế hướng đối tượng và nhiều thực hành của các nhà phát triển chuyên nghiệp. Nếu chưa đọc PPP, có thể bạn sẽ thấy cuốn sách ấy tiếp nối câu chuyện trong cuốn này. Nếu đã đọc, bạn sẽ nhận ra nhiều tư tưởng của cuốn trước được nhắc lại ở đây, nhưng ở cấp độ code.
 
-Trong sách này, bạn sẽ gặp những chỗ nhắc rải rác đến các nguyên lý thiết kế như Nguyên lý Trách nhiệm Đơn nhất (Single Responsibility Principle, SRP), Nguyên lý Mở Đóng (Open Closed Principle, OCP) và Nguyên lý Đảo ngược Phụ thuộc (Dependency Inversion Principle, DIP). PPP trình bày kỹ những nguyên lý ấy.
+Trong sách này, bạn sẽ gặp những chỗ nhắc rải rác đến các nguyên tắc thiết kế như Nguyên tắc Trách nhiệm Đơn nhất (Single Responsibility Principle, SRP), Nguyên lý Mở Đóng (Open Closed Principle, OCP) và Nguyên lý Đảo ngược Phụ thuộc (Dependency Inversion Principle, DIP). PPP trình bày kỹ những nguyên lý ấy.
 
 ## Kết luận
 

@@ -270,7 +270,7 @@ public class PerDiemMealExpenses implements MealExpenses {
 
 ## Đừng trả về null
 
-Tôi nghĩ mọi cuộc thảo luận về xử lý lỗi đều nên nhắc đến những việc ta làm để rước lỗi vào mình. Đứng đầu danh sách là trả về null. Tôi không thể đếm nổi số ứng dụng mình từng thấy mà gần như dòng nào cũng có một phép kiểm tra null. Đây là một đoạn code ví dụ:
+Tôi nghĩ mọi cuộc thảo luận về xử lý lỗi đều nên nhắc đến những việc ta làm để rước lỗi vào mình. Đứng đầu danh sách là trả về null. Tôi không thể đếm nổi số ứng dụng mình từng thấy mà gần như cứ hai dòng mã lại có một lần kiểm tra null. Đây là một đoạn code ví dụ:
 
 ```java
 public void registerItem(Item item) {
@@ -303,7 +303,7 @@ if (employees != null) {
 }
 ```
 
-Hiện tại, getEmployees có thể trả về null, nhưng nó có buộc phải thế không? Nếu sửa getEmployee để nó trả về một danh sách rỗng, ta có thể dọn gọn code:
+Hiện tại, getEmployees có thể trả về null, nhưng nó có buộc phải thế không? Nếu sửa getEmployees để nó trả về một danh sách rỗng, ta có thể dọn gọn code:
 
 ```java
 List<Employee> employees = getEmployees();

@@ -85,7 +85,7 @@ Câu trả lời nhanh, chỉ xét mã byte đã sinh, là có 12.870 đường 
 
 Sau đây là một loạt nguyên tắc và kỹ thuật giúp bảo vệ hệ thống khỏi các vấn đề do mã đồng thời gây ra.
 
-### Nguyên tắc trách nhiệm đơn
+### Nguyên tắc trách nhiệm đơn nhất
 
 SRP⁵ quy định rằng một phương thức, lớp hoặc thành phần nhất định chỉ nên có một lý do để thay đổi. Thiết kế xử lý đồng thời đủ phức tạp để tự nó trở thành một lý do thay đổi, vì vậy cần được tách khỏi phần còn lại của mã. Đáng tiếc, chi tiết triển khai xử lý đồng thời thường bị nhúng thẳng vào mã sản phẩm. Hãy cân nhắc một số điều sau:
 
@@ -157,7 +157,7 @@ Có nhiều cách khác nhau để phân chia hành vi trong ứng dụng đồn
 |---|---|
 | Tài nguyên có giới hạn | Tài nguyên có kích thước hoặc số lượng cố định được dùng trong môi trường đồng thời. Ví dụ gồm kết nối cơ sở dữ liệu và bộ đệm đọc/ghi kích thước cố định. |
 | Loại trừ tương hỗ | Tại một thời điểm, chỉ một luồng có thể truy cập dữ liệu hoặc tài nguyên dùng chung. |
-| Nghẽn tài nguyên | Một luồng hoặc một nhóm luồng không thể tiếp tục trong thời gian quá lâu hoặc mãi mãi. Ví dụ, nếu luôn cho các luồng chạy nhanh đi trước mà chúng không bao giờ hết, các luồng chạy chậm hơn có thể bị bỏ đói. |
+| Bỏ đói luồng | Một luồng hoặc một nhóm luồng không thể tiếp tục trong thời gian quá lâu hoặc mãi mãi. Ví dụ, nếu luôn cho các luồng chạy nhanh đi trước mà chúng không bao giờ hết, các luồng chạy chậm hơn có thể bị bỏ đói. |
 | Bế tắc (deadlock) | Hai hoặc nhiều luồng chờ nhau hoàn tất. Mỗi luồng giữ một tài nguyên mà luồng kia cần, và không luồng nào có thể hoàn tất cho đến khi nhận được tài nguyên kia. |
 | Bế tắc sống (livelock) | Các luồng đi cùng nhịp, mỗi luồng cố làm việc nhưng lại gặp luồng khác “cản đường”. Do cộng hưởng, các luồng tiếp tục cố tiến lên nhưng không thể tiến triển trong thời gian quá lâu, hoặc mãi mãi. |
 
@@ -378,7 +378,7 @@ Khuyến nghị: Hãy dùng các chiến lược xáo trộn để tìm lỗi.
 
 Viết mã đồng thời cho đúng rất khó. Mã vốn dễ theo dõi có thể trở thành ác mộng khi nhiều luồng và dữ liệu dùng chung xuất hiện. Nếu phải viết mã đồng thời, bạn cần viết mã sạch một cách nghiêm túc, nếu không sẽ phải đối mặt với những lỗi khó phát hiện và hiếm gặp.
 
-Trước hết, hãy tuân theo Nguyên tắc trách nhiệm đơn. Chia hệ thống thành các POJO để tách mã nhận biết luồng khỏi mã không nhận biết luồng. Khi kiểm thử mã nhận biết luồng, hãy bảo đảm bạn chỉ kiểm thử phần đó, không kiểm thử thứ gì khác. Điều này cho thấy mã nhận biết luồng nên nhỏ và tập trung.
+Trước hết, hãy tuân theo Nguyên tắc Trách nhiệm Đơn nhất. Chia hệ thống thành các POJO để tách mã nhận biết luồng khỏi mã không nhận biết luồng. Khi kiểm thử mã nhận biết luồng, hãy bảo đảm bạn chỉ kiểm thử phần đó, không kiểm thử thứ gì khác. Điều này cho thấy mã nhận biết luồng nên nhỏ và tập trung.
 
 Hãy biết các nguồn gây ra vấn đề đồng thời: nhiều luồng thao tác trên dữ liệu dùng chung hoặc dùng chung một nhóm tài nguyên. Các tình huống ở ranh giới, chẳng hạn tắt hệ thống gọn gàng hoặc hoàn thành một vòng lặp, có thể đặc biệt khó xử lý.
 

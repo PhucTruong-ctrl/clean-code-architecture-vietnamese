@@ -174,7 +174,7 @@ Tất nhiên, có một rủi ro đáng kể là chú thích làm rõ lại sai.
 
 ```java
 // Đừng chạy trừ khi bạn
-// có thời gian để giết.
+// có thời gian rảnh rỗi.
 public void _testWithReallyBigFile()
 {
   writeLinesToFile(10000000);

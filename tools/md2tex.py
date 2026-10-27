@@ -2,7 +2,7 @@
 """Convert the Vietnamese Markdown sources in vi/ to LaTeX fragments.
 
 Purpose-built converter, standard library only.  No pandoc, no markdown
-package.  Reads the dialect described in work/HUONG-DAN-DICH.md:
+package.  Reads the dialect described in docs/translation-guide.md:
 
   # .. ####      headings
   ```lang         fenced code (java, c, cpp, xml, bash, text)
@@ -17,7 +17,7 @@ package.  Reads the dialect described in work/HUONG-DAN-DICH.md:
 The fragment for each source file is written to build/gen/<stem>.tex and a
 couple of manifests (front/main/back) are written for tex/cleanbook.tex.
 
-Run:  python3 build/md2tex.py
+Run:  python3 tools/md2tex.py
 Exit status is non-zero only for real syntax errors (e.g. an unclosed code
 fence).  Missing chapter files are reported as warnings and skipped so the
 book can be rebuilt while translation is still in progress.
@@ -139,7 +139,9 @@ def tex_escape(text: str) -> str:
             out.append(ch)
             if ch == "." and 0 < i < n - 1:
                 before, after = text[i - 1], text[i + 1]
-                if before.isalnum() and (after.isalnum() or after.isupper()):
+                if before.isdigit() and after.isdigit():
+                    out.append("\\nobreak{}")
+                elif before.isalnum() and (after.isalnum() or after.isupper()):
                     out.append("\\allowbreak{}")
     return "".join(out)
 
@@ -677,13 +679,45 @@ class Renderer:
         self.warn = warn
 
     def blocks(self, blocks, ctx=None):
+
         ctx = dict(ctx or {})
         out = []
         prev = None
-        for blk in blocks:
+        i = 0
+        while i < len(blocks):
+            blk = blocks[i]
+            if (blk.kind == "image" and i + 1 < len(blocks)
+                    and blocks[i + 1].kind == "image"
+                    and "wrap=cover" in blk.extra.get("opts", "")):
+                caption = None
+                consumed = 2
+                if i + 2 < len(blocks) and blocks[i + 2].kind == "para":
+                    candidate = blocks[i + 2]
+                    if all(line.strip().startswith("*")
+                           and line.strip().endswith("*")
+                           for line in candidate.lines):
+                        caption = candidate
+                        consumed += 1
+                out.append(self._cover_images(
+                    blk, blocks[i + 1], caption))
+                prev = caption or blocks[i + 1]
+                i += consumed
+                continue
+            if (blk.kind == "list" and i + 1 < len(blocks)
+                    and blocks[i + 1].kind == "figure"
+                    and blocks[i + 1].extra["num"] in CAPTION_ONLY):
+                figure = blocks[i + 1]
+                out.append("\\begin{samepage}\n")
+                out.append(self.block(blk, ctx, prev))
+                out.append(self.block(figure, ctx, blk))
+                out.append("\\end{samepage}\n")
+                prev = figure
+                i += 2
+                continue
             out.append(self.block(blk, ctx, prev))
             if blk.kind not in ("hr",):
                 prev = blk
+            i += 1
         return "".join(x for x in out if x)
 
     def block(self, blk, ctx, prev=None):
@@ -746,6 +780,17 @@ class Renderer:
                 "\\ccillustration{%s}{%s}\n"
                 "\\addvspace{8pt}\n" % (src, width))
 
+    def _cover_images(self, first, second, caption):
+        specs = []
+        for block in (first, second):
+            match = re.search(r"w=([0-9.]+)", block.extra.get("opts", ""))
+            width = "%.1fbp" % float(match.group(1)) if match else "0.5\\linewidth"
+            specs.extend((block.extra["src"], width))
+        caption_tex = (self.inline.convert(join_lines(caption.lines))
+                       if caption else "")
+        return ("\\cccoverimages{%s}{%s}{%s}{%s}{%s}\n"
+                % (*specs, caption_tex))
+
     # -- figures -----------------------------------------------------------
     _FIG_RE = re.compile(r"^\*\*Hình\s+([0-9]+-[0-9]+|[A-Z]-[0-9]+)\*\*")
 
@@ -756,7 +801,9 @@ class Renderer:
         title_lines = [x.strip() for x in rest if x.strip()]
         title = " ".join(title_lines)
         title_tex = self.inline.convert(title)
-        out = ["\\par\\addvspace{10pt}\n\\begin{ccfigure}\n"]
+        reserve = "\\needspace{160pt}\n" if num == "8-2" else ""
+        out = ["\\par\\addvspace{10pt}\n%s\\begin{samepage}\n"
+               "\\begin{ccfigure}\n" % reserve]
         if num in CAPTION_ONLY:
             pass
         elif num in FIG_WIDTH:
@@ -772,7 +819,7 @@ class Renderer:
         if title_tex:
             out.append("\\vspace{1pt}{\\itshape %s}\\par" % title_tex)
         out.append("}\n")
-        out.append("\\end{ccfigure}\n\\addvspace{10pt}\n")
+        out.append("\\end{ccfigure}\n\\end{samepage}\n\\addvspace{10pt}\n")
         return "".join(out)
 
     # -- code --------------------------------------------------------------
@@ -787,18 +834,22 @@ class Renderer:
                     % cap_tex)
         else:
             head = ""
+        numbered_lines = sum(
+            bool(re.match(r"^\s+\d+\s", line))
+            for line in blk.lines[:5])
+        breakindent = "40pt" if numbered_lines >= 2 else "18pt"
         return (
             "\\par\\addvspace{6pt}\n"
             "\\begin{cccode}\n"
             "%s"
             "\\begin{Verbatim}[breaklines=true,breakanywhere=true,"
-            "breakindent=18pt,breakautoindent=false,breaksymbolleft={},breaksymbolright={},"
+            "breakindent=%s,breakautoindent=false,breaksymbolleft={},breaksymbolright={},"
             "fontsize=\\fontsize{7.2}{9}\\selectfont,"
             "xleftmargin=10pt]\n"
             "%s\n"
             "\\end{Verbatim}\n"
             "\\end{cccode}\n"
-            "\\addvspace{8pt}\n" % (head, body))
+            "\\addvspace{8pt}\n" % (head, breakindent, body))
 
     # -- quotes ------------------------------------------------------------
     def _quote(self, blk, ctx):
@@ -933,7 +984,7 @@ class Converter:
                 % ", ".join(str(x) for x in sorted(unused)))
 
         body = "".join(out)
-        head = "%% %s -- generated by build/md2tex.py, do not edit\n" % \
+        head = "%% %s -- generated by tools/md2tex.py, do not edit\n" % \
             self.part["md"]
         return head + body
 
@@ -1127,7 +1178,7 @@ class Converter:
 def write_manifest(name, inputs):
     path = os.path.join(GEN, name)
     with open(path, "w", encoding="utf-8") as fh:
-        fh.write("%% generated by build/md2tex.py -- do not edit\n")
+        fh.write("%% generated by tools/md2tex.py -- do not edit\n")
         for tex in inputs:
             fh.write("\\input{%s}\n" % tex)
     return path

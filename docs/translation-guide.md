@@ -21,6 +21,7 @@ Tác giả viết ở ngôi thứ nhất, kể chuyện nghề, có chỗ tự t
 - Được phép dùng từ chuyên môn tiếng Anh khi tiếng Việt không có tương đương tự nhiên (xem bảng thuật ngữ). Lần đầu xuất hiện có thể kèm nguyên ngữ trong ngoặc.
 - Câu dài ngắn xen kẽ. Đừng dịch mỗi câu tiếng Anh thành một câu tiếng Việt cùng độ dài; hãy tách, gộp, đảo trật tự khi tiếng Việt cần.
 - Tránh văn phong "dịch máy": không lặp "của nó", "được thực hiện bởi", "việc mà", "một cách", "những cái". Không dịch sát từng giới từ.
+- Với thành ngữ hoặc ẩn dụ khó hiểu khi dịch sát, ưu tiên cách diễn đạt tự nhiên; nếu cần giữ nguyên hình ảnh của câu trích dẫn, làm rõ nghĩa ngắn gọn trong ngữ cảnh, không gán lời giải thích vào trích dẫn.
 - Không dùng dấu gạch ngang dài (—) trong lời dịch. Thay bằng dấu phẩy, dấu hai chấm, ngoặc đơn, hoặc tách câu.
 - Không dùng bullet có nhãn in đậm kiểu "**Quan trọng:**" nếu nguyên bản không có.
 - Không thêm câu kết luận, câu nhấn mạnh, câu diễn giải lại ý vừa nói. Nguyên bản có gì dịch nấy.

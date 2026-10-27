@@ -105,7 +105,7 @@ Tạm gác vấn đề hành vi đó sang một bên. Giải pháp trên còn c�
 
 ¹ Bạn có thể tự kiểm chứng bằng cách chạy thử mã trước và sau khi thay đổi. Xem mã không dùng luồng bắt đầu ở trang 343, và mã có dùng luồng bắt đầu ở trang 346.
 
-Server có nhiều lý do để thay đổi, vì thế nó vi phạm Nguyên tắc Trách nhiệm Đơn lẻ. Để giữ cho hệ thống đồng thời sạch sẽ, việc quản lý luồng nên được gom vào một vài nơi có kiểm soát chặt chẽ. Hơn nữa, mọi mã quản lý luồng chỉ nên làm đúng việc quản lý luồng. Vì sao? Chỉ riêng việc lần tìm lỗi xử lý đồng thời đã đủ khó, không cần phải đồng thời tháo gỡ những vấn đề không liên quan khác.
+Server có nhiều lý do để thay đổi, vì thế nó vi phạm Nguyên tắc Trách nhiệm Đơn nhất. Để giữ cho hệ thống đồng thời sạch sẽ, việc quản lý luồng nên được gom vào một vài nơi có kiểm soát chặt chẽ. Hơn nữa, mọi mã quản lý luồng chỉ nên làm đúng việc quản lý luồng. Vì sao? Chỉ riêng việc lần tìm lỗi xử lý đồng thời đã đủ khó, không cần phải đồng thời tháo gỡ những vấn đề không liên quan khác.
 
 Nếu tạo một lớp riêng cho từng trách nhiệm liệt kê ở trên, kể cả trách nhiệm quản lý luồng, thì khi thay đổi chiến lược quản lý luồng, phạm vi mã bị ảnh hưởng sẽ nhỏ hơn và không làm nhiễm bẩn các trách nhiệm khác. Cách này cũng giúp kiểm thử những trách nhiệm còn lại dễ hơn nhiều mà không phải bận tâm đến luồng. Đây là phiên bản cập nhật thực hiện điều đó:
 
@@ -177,7 +177,7 @@ public class ExecutorClientScheduler implements ClientScheduler {
 
 ### Kết luận
 
-Đưa xử lý đồng thời vào ví dụ cụ thể này cho thấy một cách tăng thông lượng hệ thống và một cách kiểm tra thông lượng đó bằng framework kiểm thử. Gom toàn bộ mã xử lý đồng thời vào một số ít lớp là một ví dụ áp dụng Nguyên tắc Trách nhiệm Đơn lẻ. Điều này đặc biệt quan trọng trong lập trình đồng thời vì độ phức tạp của nó.
+Đưa xử lý đồng thời vào ví dụ cụ thể này cho thấy một cách tăng thông lượng hệ thống và một cách kiểm tra thông lượng đó bằng framework kiểm thử. Gom toàn bộ mã xử lý đồng thời vào một số ít lớp là một ví dụ áp dụng Nguyên tắc Trách nhiệm Đơn nhất. Điều này đặc biệt quan trọng trong lập trình đồng thời vì độ phức tạp của nó.
 
 ## Các đường thực thi khả dĩ
 
@@ -723,7 +723,7 @@ Một luồng không thể lấy tài nguyên khỏi luồng khác. Khi một lu
 
 ### Chờ vòng tròn
 
-Hiện tượng này còn được gọi là vòng ôm chết người. Hãy hình dung hai luồng T1 và T2 cùng hai tài nguyên R1 và R2. T1 giữ R1, T2 giữ R2. T1 cũng cần R2, còn T2 cũng cần R1. Tình huống sẽ giống Hình A-3:
+Hiện tượng này còn được gọi là “vòng tay tử thần”. Hãy hình dung hai luồng T1 và T2 cùng hai tài nguyên R1 và R2. T1 giữ R1, T2 giữ R2. T1 cũng cần R2, còn T2 cũng cần R1. Tình huống sẽ giống Hình A-3:
 
 **Hình A-3**
 
