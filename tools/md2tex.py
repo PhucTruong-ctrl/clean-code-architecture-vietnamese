@@ -1,26 +1,10 @@
 #!/usr/bin/env python3
-"""Convert the Vietnamese Markdown sources in vi/ to LaTeX fragments.
+"""Convert one configured book's Vietnamese Markdown sources to LaTeX.
 
-Purpose-built converter, standard library only.  No pandoc, no markdown
-package.  Reads the dialect described in docs/translation-guide.md:
+The parser and renderer are shared by all books. Book structure, source paths,
+assets, and figure dimensions live in each `books/<book-id>/book.py` config.
 
-  # .. ####      headings
-  ```lang         fenced code (java, c, cpp, xml, bash, text)
-  > quote         blockquotes (epigraphs, pull quotes)
-  - / 1.          lists, nested
-  [^n] + [^n]:    footnotes, type A (definition at end of file)
-  \u00b9 \u00b2 ...     footnotes, type B (superscript marker, inline definition)
-  [Ref]: text     bibliography / citation labels
-  ---             horizontal rule
-  | tables |
-
-The fragment for each source file is written to build/gen/<stem>.tex and a
-couple of manifests (front/main/back) are written for tex/cleanbook.tex.
-
-Run:  python3 tools/md2tex.py
-Exit status is non-zero only for real syntax errors (e.g. an unclosed code
-fence).  Missing chapter files are reported as warnings and skipped so the
-book can be rebuilt while translation is still in progress.
+Run: python3 tools/md2tex.py <book-id>
 """
 from __future__ import annotations
 
@@ -29,57 +13,20 @@ import re
 import sys
 import unicodedata
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-VI = os.path.join(ROOT, "vi")
-GEN = os.path.join(ROOT, "build", "gen")
-ASSETS_REL = "assets/openers"
+from book_config import ROOT, load_book
 
-# ---------------------------------------------------------------------------
-# Book structure.  `num` is the printed chapter number (the LaTeX chapter
-# counter is forced to it, so a missing file never renumbers later chapters).
-# `opener` is the PDF page of the original chapter-opening illustration, `w`
-# is the width *measured from the original PDF*, in points.
-# ---------------------------------------------------------------------------
-PARTS = [
-    dict(md="00-loi-tua-va-gioi-thieu.md", kind="front", section="front",
-         toc="true"),
-    dict(md="01-ma-sach.md", kind="chapter", num=1, opener=23, w=355.6),
-    dict(md="02-ten-co-y-nghia.md", kind="chapter", num=2, opener=38, w=358.2),
-    dict(md="03-ham.md", kind="chapter", num=3, opener=52, w=233.1),
-    dict(md="04-chu-thich.md", kind="chapter", num=4, opener=74, w=353.9),
-    dict(md="05-dinh-dang.md", kind="chapter", num=5, opener=96, w=287.7),
-    dict(md="06-doi-tuong-va-cau-truc-du-lieu.md", kind="chapter", num=6,
-         opener=114, w=197.8),
-    dict(md="07-xu-ly-loi.md", kind="chapter", num=7, opener=123, w=356.3),
-    dict(md="08-ranh-gioi.md", kind="chapter", num=8, opener=133, w=350.3),
-    dict(md="09-kiem-thu-don-vi.md", kind="chapter", num=9, opener=141, w=251.8),
-    dict(md="10-lop.md", kind="chapter", num=10, opener=154, w=356.1),
-    dict(md="11-he-thong.md", kind="chapter", num=11, opener=171, w=222.4),
-    dict(md="12-thiet-ke-noi-len.md", kind="chapter", num=12, opener=189, w=263.7),
-    dict(md="13-dong-thoi.md", kind="chapter", num=13, opener=195, w=223.6),
-    dict(md="14-tinh-chinh-tung-buoc.md", kind="chapter", num=14, opener=210,
-         w=308.1),
-    dict(md="15-ben-trong-junit.md", kind="chapter", num=15, opener=268, w=302.1),
-    dict(md="16-tai-cau-truc-serialdate.md", kind="chapter", num=16, opener=283,
-         w=359.7),
-    dict(md="17-mui-code-va-nguyen-tac.md", kind="chapter", num=17, opener=301,
-         w=333.3),
-    dict(md="18-phu-luc-a-dong-thoi-2.md", kind="appendix", letter="A"),
-    dict(md="19-phu-luc-b-serialdate.md", kind="appendix", letter="B"),
-    dict(md="20-phu-luc-c-tham-chieu-cheo.md", kind="appendix", letter="C"),
-    dict(md="21-epilogue.md", kind="front", section="back", toc="true"),
-    dict(md="22-ve-ban-dich.md", kind="front", section="back", toc="true"),
-]
+BOOK_ID = ""
+BOOK = {}
+VI = GEN = ASSET_ROOT_REL = FIGURES_REL = ASSETS_REL = BUILD_REL = ""
+PARTS = []
+FIG_WIDTH = {}
+CAPTION_ONLY = set()
 
-# Figure widths measured from the original PDF (SVG placement matrix of the
-# embedded image, points).  "Hình 8-1" has no bitmap in the original: the
-# method list was translated as a normal list, so only the caption is printed.
-FIG_WIDTH = {
-    "1-1": 244.6, "5-1": 339.5, "5-2": 345.3, "8-2": 305.7,
-    "11-1": 217.2, "11-2": 285.3, "11-3": 263.7,
-    "A-1": 335.7, "A-2": 335.7, "A-3": 143.9,
-}
-CAPTION_ONLY = {"8-1"}
+def asset_path(src):
+    """Resolve book-relative Markdown assets from the repository root."""
+    if src.startswith("assets/"):
+        return "%s/%s" % (ASSET_ROOT_REL, src[len("assets/"):])
+    return src
 
 # Unicode superscript digits -> ASCII digits.
 SUP = {
@@ -606,7 +553,7 @@ def parse_blocks(lines):
                 continue
             para.append(nxt)
             i += 1
-        fig = re.match(r"^\*\*Hình\s+([0-9]+-[0-9]+|[A-Z]-[0-9]+)\*\*", para[0])
+        fig = re.match(r"^\*\*Hình\s+([0-9]+[.-][0-9]+|[A-Z][.-][0-9]+)\*\*", para[0])
         if fig:
             blocks.append(Block("figure", para, extra={"num": fig.group(1)}))
         else:
@@ -770,9 +717,8 @@ class Renderer:
             return "\\ccsubsubsection{%s}{%s}\n" % (toc, title)
         return "\\ccparagraph{%s}\n" % title
 
-    # -- inline illustrations ----------------------------------------------
     def _image(self, blk, ctx):
-        src = blk.extra["src"]
+        src = asset_path(blk.extra["src"])
         opts = blk.extra.get("opts") or ""
         m = re.search(r"w=([0-9.]+)", opts)
         width = "%.1fbp" % float(m.group(1)) if m else "0.5\\linewidth"
@@ -785,14 +731,14 @@ class Renderer:
         for block in (first, second):
             match = re.search(r"w=([0-9.]+)", block.extra.get("opts", ""))
             width = "%.1fbp" % float(match.group(1)) if match else "0.5\\linewidth"
-            specs.extend((block.extra["src"], width))
+            specs.extend((asset_path(block.extra["src"]), width))
         caption_tex = (self.inline.convert(join_lines(caption.lines))
                        if caption else "")
         return ("\\cccoverimages{%s}{%s}{%s}{%s}{%s}\n"
                 % (*specs, caption_tex))
 
     # -- figures -----------------------------------------------------------
-    _FIG_RE = re.compile(r"^\*\*Hình\s+([0-9]+-[0-9]+|[A-Z]-[0-9]+)\*\*")
+    _FIG_RE = re.compile(r"^\*\*Hình\s+([0-9]+[.-][0-9]+|[A-Z][.-][0-9]+)\*\*")
 
     def _figure(self, blk, ctx):
         num = blk.extra["num"]
@@ -808,9 +754,7 @@ class Renderer:
             pass
         elif num in FIG_WIDTH:
             out.append("\\includegraphics[width=%.1fpt]{%s/fig-%s.png}\n"
-                       % (FIG_WIDTH[num], ASSETS_REL.replace("openers",
-                                                             "figures"),
-                          num))
+                       % (FIG_WIDTH[num], FIGURES_REL, num))
         else:
             self.warn("no image or width for Hình %s (caption only)" % num)
         out.append("\\par\\addvspace{2pt}\n"
@@ -821,6 +765,7 @@ class Renderer:
         out.append("}\n")
         out.append("\\end{ccfigure}\n\\end{samepage}\n\\addvspace{10pt}\n")
         return "".join(out)
+
 
     # -- code --------------------------------------------------------------
     def _code(self, blk, ctx):
@@ -1000,7 +945,13 @@ class Converter:
                 nxt = blocks[i + 1]
                 if nxt.kind == "para":
                     text = join_lines(nxt.lines)
-                    if 0 < len(text) <= 90 and "\n" not in text:
+                    title_like = ((text.startswith("**") and text.endswith("**"))
+                                  or (text.startswith("*") and text.endswith("*")))
+                    short_bare_title = (
+                        0 < len(text) <= 75
+                        and not re.search(r"[.!?;:]$", text)
+                    )
+                    if "\n" not in text and (title_like or short_bare_title):
                         blk.lines = blk.lines + nxt.lines
                         i += 1
             out.append(blk)
@@ -1185,8 +1136,31 @@ def write_manifest(name, inputs):
 
 
 def main(argv=None):
-    os.makedirs(GEN, exist_ok=True)
+    global BOOK_ID, BOOK, VI, GEN, ASSET_ROOT_REL, FIGURES_REL
+    global ASSETS_REL, BUILD_REL, PARTS, FIG_WIDTH, CAPTION_ONLY
 
+    args = sys.argv[1:] if argv is None else argv
+    if len(args) != 1:
+        sys.stderr.write("usage: python3 tools/md2tex.py <book-id>\n")
+        return 2
+    try:
+        BOOK = load_book(args[0])
+    except ValueError as exc:
+        sys.stderr.write("md2tex: ERROR: %s\n" % exc)
+        return 2
+
+    BOOK_ID = BOOK["id"]
+    VI = os.path.join(ROOT, BOOK["translation_dir"])
+    BUILD_REL = BOOK["build_dir"]
+    GEN = os.path.join(ROOT, BUILD_REL, "gen")
+    ASSET_ROOT_REL = BOOK["asset_root"]
+    FIGURES_REL = os.path.join(ASSET_ROOT_REL, "figures")
+    ASSETS_REL = os.path.join(ASSET_ROOT_REL, "openers")
+    PARTS = BOOK["parts"]
+    FIG_WIDTH = BOOK["figure_width"]
+    CAPTION_ONLY = BOOK["caption_only"]
+
+    os.makedirs(GEN, exist_ok=True)
     sections = {"front": [], "main": [], "back": []}
     missing = []
     empty = []
@@ -1213,49 +1187,48 @@ def main(argv=None):
             sys.stderr.write("ERROR %s: %s\n" % (part["md"], exc))
             return 1
         stem = os.path.splitext(part["md"])[0]
-        rel = "build/gen/%s.tex" % stem
+        rel = "%s/gen/%s.tex" % (BUILD_REL, stem)
         with open(os.path.join(GEN, stem + ".tex"), "w",
                   encoding="utf-8") as fh:
             fh.write(tex)
         sections[part.get("section", "main")].append(rel)
-        for w in conv.warnings:
-            all_warnings.append("%s: %s" % (part["md"], w))
+        for warning in conv.warnings:
+            all_warnings.append("%s: %s" % (part["md"], warning))
 
     write_manifest("front.tex", sections["front"])
     write_manifest("main.tex", sections["main"])
     write_manifest("back.tex", sections["back"])
 
-    # status report
-    status = []
-    total_chapters = sum(1 for p in PARTS if p["kind"] == "chapter")
-    present_chapters = sum(1 for p in PARTS if p["kind"] == "chapter"
-                           and os.path.exists(os.path.join(VI, p["md"]))
-                           and os.path.getsize(os.path.join(VI, p["md"])) > 0)
-    status.append("chapters present: %d/%d" %
-                  (present_chapters, total_chapters))
+    total_chapters = sum(1 for part in PARTS if part["kind"] == "chapter")
+    present_chapters = sum(
+        1 for part in PARTS
+        if part["kind"] == "chapter"
+        and os.path.exists(os.path.join(VI, part["md"]))
+        and os.path.getsize(os.path.join(VI, part["md"])) > 0)
+    status = ["chapters present: %d/%d" %
+              (present_chapters, total_chapters)]
     if missing:
         status.append("MISSING files (skipped): " + ", ".join(missing))
     if empty:
         status.append("EMPTY files (skipped): " + ", ".join(empty))
     if all_warnings:
         status.append("warnings:")
-        status.extend("  - " + w for w in all_warnings)
-    status_path = os.path.join(GEN, "status.txt")
-    with open(status_path, "w", encoding="utf-8") as fh:
+        status.extend("  - " + warning for warning in all_warnings)
+    with open(os.path.join(GEN, "status.txt"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(status) + "\n")
 
-    print("md2tex: %d chapters, %d warnings"
-          % (present_chapters, len(all_warnings)))
+    print("%s: %d/%d chapters, %d warnings" %
+          (BOOK_ID, present_chapters, total_chapters, len(all_warnings)))
     if missing:
-        print("md2tex: WARNING missing files causing chapters to be skipped:")
-        for m in missing:
-            print("  - vi/" + m)
+        print("md2tex: WARNING missing source files:")
+        for name in missing:
+            print("  - %s/%s" % (BOOK["translation_dir"], name))
     if empty:
-        print("md2tex: WARNING empty files skipped:")
-        for m in empty:
-            print("  - vi/" + m)
-    for w in all_warnings:
-        print("md2tex: note: " + w)
+        print("md2tex: WARNING empty source files:")
+        for name in empty:
+            print("  - %s/%s" % (BOOK["translation_dir"], name))
+    for warning in all_warnings:
+        print("md2tex: note: " + warning)
     return 0
 
 

@@ -1,0 +1,519 @@
+%% architecture.tex -- driver for the Vietnamese edition of Clean Architecture.
+%%
+%% Build with ./build.sh clean-architecture (tools/md2tex.py, then three XeLaTeX passes).
+%% Chapter bodies are generated fragments under build/clean-architecture/gen/.
+%%
+%% Geometry, headings, code boxes, TOC and running heads are matched to the
+%% Pearson 2017 interior (517.608 x 666.36 pt, 360 pt measure, 10/12 Times).
+\documentclass[10pt,twoside,openright]{book}
+
+% ---------------------------------------------------------------------------
+% Page geometry: trim 517.608 x 666.36 pt, 360 pt measure, symmetric 78.8 pt
+% margins, body top 72.4 pt, text height 511 pt, running head at 36.4 pt.
+% ---------------------------------------------------------------------------
+% PDF measurements are in big points (1bp = 1/72in); TeX's "pt" is 1/72.27in,
+% so using pt here would shrink the trim by 0.37%.
+\usepackage[
+  paperwidth=517.608bp, paperheight=666.36bp,
+  textwidth=360bp, textheight=511bp,
+  left=78.8bp, right=78.8bp, top=72.4bp, bottom=82.4bp,
+  headheight=12bp, headsep=24bp, footskip=24bp,
+  twoside=true, columnsep=18bp
+]{geometry}
+
+% ---------------------------------------------------------------------------
+% Fonts: Liberation Serif/Sans/Mono (metric clones of Times/Helvetica/Courier).
+% ---------------------------------------------------------------------------
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}[Ligatures=TeX]
+\setsansfont{Liberation Sans}[Ligatures=TeX]
+\setmonofont{Liberation Mono}[Ligatures=TeX]
+% Correct copy/paste and text extraction of Vietnamese diacritics under XeTeX
+% (see handoff.md section 6.3).
+\XeTeXgenerateactualtext=1
+
+\usepackage{xcolor}
+\definecolor{ccink}{HTML}{231F20}
+\usepackage{graphicx}
+\usepackage{fvextra}
+% fvextra >= 1.14 paints "_\rfloor" (U+230B) at every breakanywhere point;
+% the printed original has no such mark, and it pollutes the text layer.
+\fvset{breakanywheresymbolpre={},breakanywheresymbolpost={},
+  breakbeforesymbolpre={},breakbeforesymbolpost={},
+  breakaftersymbolpre={},breakaftersymbolpost={}}
+\usepackage{wrapfig}
+\usepackage{tabularx}
+\usepackage{xurl}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% ---------------------------------------------------------------------------
+% General text parameters
+% ---------------------------------------------------------------------------
+\color{ccink}
+\parindent=18pt
+\parskip=0pt
+\emergencystretch=2em
+\hyphenpenalty=100
+\exhyphenpenalty=100
+\hbadness=3000
+\vbadness=3000
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{0}    % chapters numbered, section headings unnumbered
+\renewcommand{\arraystretch}{1.15}
+\raggedbottom
+
+% ---------------------------------------------------------------------------
+% Running heads: even page = folio left, chapter title right;
+%                odd page  = section title left, folio right;
+%                chapter pages = no head, folio bottom right.
+% ---------------------------------------------------------------------------
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[R]{\fontsize{10}{12}\selectfont\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+\fancypagestyle{main}{%
+  \fancyhf{}%
+  \fancyhead[LE]{\fontsize{10}{12}\selectfont\bfseries\thepage}%
+  \fancyhead[RE]{\fontsize{10}{12}\selectfont\bfseries\leftmark}%
+  \fancyhead[LO]{\fontsize{10}{12}\selectfont\bfseries\rightmark}%
+  \fancyhead[RO]{\fontsize{10}{12}\selectfont\bfseries\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+\pagestyle{main}
+% The original edition starts chapters and front-matter sections on the next
+% page, whatever its parity: no blank verso pages are inserted.
+\renewcommand{\cleardoublepage}{\clearpage}
+\renewcommand{\chaptermark}[1]{%
+  \markboth{Chương \thechapter: #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+
+% ---------------------------------------------------------------------------
+% Footnote layout: 8 pt, number not superscript, hanging indent like the
+% original ("1.  [KP78], p. 144.").
+% ---------------------------------------------------------------------------
+\makeatletter
+\renewcommand{\@makefntext}[1]{%
+  \parindent 0pt
+  \noindent\hangindent=16pt\hangafter=1
+  \hbox to 14pt{\normalfont\footnotesize\@thefnmark.\hss}#1}
+\makeatother
+\setlength{\footnotesep}{12pt}
+\renewcommand{\footnoterule}{%
+  \kern-3pt\vbox{\hrule width 0.4\columnwidth height 0.4pt}\kern 3pt}
+
+% ---------------------------------------------------------------------------
+% Chapter openers
+%   - numbered chapter: rule / 48 pt number right / rule / 24 pt title right
+%   - unnumbered front matter: rule / 36 pt title right / rule
+%   - appendix: rule / 48 pt "Phụ lục A" right / rule / 24 pt title right
+% The illustration and epigraph are emitted by the converter after the head.
+% ---------------------------------------------------------------------------
+\makeatletter
+\newif\ifcc@appendix
+
+% Vertical calibration measured against the original PDF (rules at
+% y=90.4pt and 155.4pt from the trim top, chapter number ink at 106.4pt,
+% chapter title ink at 204.7pt).
+\def\cc@pretop{-2.6pt}
+\def\cc@afterruleA{-3.6pt}
+\def\cc@afternum{4.6pt}
+\def\cc@afterruleB{37.4pt}
+\def\cc@fr@afterA{0.3pt}
+\def\cc@fr@afterB{12.7pt}
+\def\cc@fr@bodygap{35.6pt}
+
+\newcommand{\cc@chapterhead}[2]{%
+  \vspace*{\cc@pretop}%
+  {\parindent\z@\raggedleft
+    \rule{\textwidth}{0.75pt}\par
+    \addvspace{\cc@afterruleA}%
+    {\fontsize{48}{52}\selectfont\bfseries #1\par}%
+    \addvspace{\cc@afternum}%
+    \rule{\textwidth}{0.75pt}\par
+    \addvspace{\cc@afterruleB}%
+    {\fontsize{24}{28}\selectfont\bfseries #2\par}%
+  }%
+  \par\nobreak
+}
+
+\def\@makechapterhead#1{%
+  \cc@chapterhead{\thechapter}{#1}%
+  \setcounter{footnote}{0}%
+}
+\def\@makeschapterhead#1{%
+  \vspace*{\cc@pretop}%
+  {\parindent\z@\raggedleft
+    \rule{\textwidth}{0.75pt}\par
+    \addvspace{\cc@fr@afterA}%
+    {\fontsize{36}{40}\selectfont\bfseries #1\par}%
+    \addvspace{\cc@fr@afterB}%
+    \rule{\textwidth}{0.75pt}\par
+    \addvspace{\cc@fr@bodygap}%
+  }%
+  \par\nobreak
+  \setcounter{footnote}{0}%
+}
+
+% Numbered chapter: \ccchapter{title}.  The source may skip chapters (while
+% translation is in progress) without renumbering the rest.
+\newcommand{\ccchapter}[1]{\chapter{#1}}
+
+% Unnumbered front/back matter chapter.  \chapter* starts a fresh page, uses
+% the 36 pt heading above, and we add the TOC line ourselves (tocloft's
+% chapter style is bold 14 pt, meant for numbered chapters).
+\newcommand{\ccfrontchapter}[1]{%
+  \chapter*{#1}%
+  \markboth{#1}{#1}%
+  \addtocontents{toc}{\protect\ccfronttocline{#1}{\thepage}}%
+}
+
+\newcommand{\ccfronttocline}[2]{%
+  \par\noindent
+  #1\nobreak\leaders\hbox{\hbox to 4.5pt{\hfil.\hfil}}\hfill\nobreak
+  #2\par\vspace{7pt}%
+}
+
+% Appendices A/B/C: label instead of a number; no opener illustration.
+\newcommand{\ccappendixsetup}[1]{%
+  \cc@appendixtrue
+  \setcounter{chapter}{\numexpr#1-1\relax}%
+  \renewcommand{\thechapter}{\Alph{chapter}}%
+}
+\newcommand{\ccappendix}[1]{%
+  \cleardoublepage
+  \refstepcounter{chapter}%
+  \thispagestyle{plain}%
+  \addcontentsline{toc}{chapter}{Phụ lục \thechapter: #1}%
+  \markboth{Phụ lục \thechapter: #1}{}%
+  \cc@chapterhead{Phụ lục \thechapter}{#1}%
+  \setcounter{footnote}{0}%
+}
+\makeatother
+
+% Byline under the chapter/appendix title ("Tác giả: ...", "với ...").
+\newcommand{\ccauthor}[1]{\par{\raggedleft\fontsize{10}{12}\selectfont #1\par}}
+
+% Chapter-opening illustration, width measured from the original PDF.
+\newcommand{\ccopenerimage}[2]{%
+  \par\addvspace{1pt}%
+  {\centering\includegraphics[width=#2]{#1}\par}%
+  \addvspace{2pt}%
+}
+
+% Uncaptioned inline illustration from the original edition (portraits,
+% cartoons, cover photos).  #1 = path, #2 = width with unit.
+\newcommand{\ccillustration}[2]{%
+  \par\addvspace{2pt}%
+  {\centering\includegraphics[width=#2,keepaspectratio]{#1}\par}%
+  \addvspace{2pt}%
+}
+
+% The two cover photographs wrap beside the paragraph describing the cover.
+\newcommand{\cccoverimages}[5]{%
+  \begin{wrapfigure}{r}{142bp}%
+    \centering
+    \includegraphics[width=#2,keepaspectratio]{#1}\par
+    \vspace{2pt}%
+    \includegraphics[width=#4,keepaspectratio]{#3}\par
+    \vspace{2pt}%
+    {\fontsize{8}{10}\selectfont #5\par}%
+  \end{wrapfigure}%
+}
+
+% Chapter epigraph: quotation right aligned, italic; attribution on the last
+% line, roman.  Both arguments are LaTeX produced by the converter.
+\newcommand{\ccepigraph}[2]{%
+  \par\addvspace{8pt}%
+  {\raggedleft\itshape\fontsize{10}{12}\selectfont #1\par}%
+  \if\relax\detokenize{#2}\relax\else
+    \vspace{2pt}%
+    {\raggedleft\fontsize{10}{12}\selectfont #2\par}%
+  \fi
+  \addvspace{10pt}%
+}
+
+% Chapter 1's opening paragraph: left aligned over the full measure.
+\newcommand{\ccepigraphleft}[2]{%
+  \par\addvspace{10pt}%
+  {\itshape\fontsize{10}{12}\selectfont #1\par}%
+  \if\relax\detokenize{#2}\relax\else
+    \vspace{2pt}%
+    {\raggedleft\fontsize{10}{12}\selectfont #2\par}%
+  \fi
+  \addvspace{10pt}%
+}
+
+% Appendix C cross-reference line: bold label, dot leader, numbers flush
+% right (wrapped numbers stay right aligned, as in the original).
+\newcommand{\ccrefitem}[2]{%
+  \par\noindent\begingroup
+  \fontsize{10}{12}\selectfont
+  \makebox[2.0em][l]{#1}%
+  \nobreak\leaders\hbox{\hbox to 4pt{\hfil.\hfil}}\hfill\nobreak\
+  \setbox0=\hbox{#2}%
+  \ifdim\wd0>218pt
+    \parbox[t]{218pt}{\raggedleft #2}%
+  \else
+    \mbox{#2}%
+  \fi
+  \par\endgroup
+  \vspace{0.5pt}%
+}
+
+% Pull quote / long blockquote inside the body.
+\newenvironment{ccblockquote}{%
+  \par\addvspace{8pt}%
+  \begin{list}{}{%
+    \setlength{\leftmargin}{24pt}%
+    \setlength{\rightmargin}{12pt}%
+    \setlength{\topsep}{0pt}%
+    \setlength{\parsep}{4pt}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\itemindent}{0pt}%
+    \setlength{\listparindent}{1em}%
+  }%
+  \item\relax\itshape
+}{%
+  \end{list}%
+  \addvspace{8pt}%
+}
+
+% Figure floats-less block: centred image + bold "Hình X.Y" caption, then the
+% description in italic, centred, 9.5 pt.
+\newenvironment{ccfigure}{%
+  \par\addvspace{6pt}%
+  \begin{center}%
+}{%
+  \end{center}%
+  \addvspace{6pt}%
+}
+
+% ---------------------------------------------------------------------------
+% Section headings (14 / 12 / 10 pt bold, unnumbered).
+% ---------------------------------------------------------------------------
+\newcommand{\ccsection}[2]{%
+  \par\addvspace{18pt}%
+  \needspace{2\baselineskip}%
+  \noindent{\fontsize{14}{17}\selectfont\bfseries #2\par}%
+  \nobreak\addvspace{6pt}\nobreak
+  \markright{#1}%
+  \addcontentsline{toc}{section}{#1}%
+}
+\newcommand{\ccsubsection}[2]{%
+  \par\addvspace{14pt}%
+  \needspace{2\baselineskip}%
+  \noindent{\fontsize{12}{14.5}\selectfont\bfseries #2\par}%
+  \nobreak\addvspace{4pt}\nobreak
+  \addcontentsline{toc}{subsection}{#1}%
+}
+\newcommand{\ccsubsubsection}[2]{%
+  \par\addvspace{12pt}%
+  \needspace{2\baselineskip}%
+  \noindent{\fontsize{10}{12}\selectfont\bfseries #2\par}%
+  \nobreak\addvspace{3pt}\nobreak
+  \addcontentsline{toc}{subsubsection}{#1}%
+}
+\newcommand{\ccparagraph}[1]{%
+  \par\addvspace{10pt}%
+  \needspace{2\baselineskip}%
+  \noindent{\fontsize{10}{12}\selectfont\bfseries #1\par}%
+  \nobreak\addvspace{2pt}\nobreak
+}
+
+% ---------------------------------------------------------------------------
+% Code boxes: full measure, 0.5 pt rule, no fill, caption strip with a rule
+% under it, Courier/Liberation Mono 7.2/9 (measured from the original).
+% ---------------------------------------------------------------------------
+\newtcolorbox{cccode}{%
+  enhanced, breakable,
+  colback=white, colframe=ccink,
+  boxrule=0.5pt, arc=0pt, outer arc=0pt,
+  left=8pt, right=6pt, top=5pt, bottom=6pt,
+  boxsep=0pt, toptitle=0pt, bottomtitle=0pt,
+  before skip=0pt, after skip=0pt,
+  pad at break*=0pt,
+}
+
+% List styling
+\setlist[itemize]{leftmargin=20pt,labelsep=8pt,itemsep=1pt,topsep=4pt,
+  parsep=0pt,partopsep=0pt}
+\setlist[enumerate]{leftmargin=22pt,labelsep=8pt,itemsep=1pt,topsep=4pt,
+  parsep=0pt,partopsep=0pt,label=\arabic*.}
+
+% ---------------------------------------------------------------------------
+% TOC styling (tocloft)
+% ---------------------------------------------------------------------------
+\renewcommand{\cftchapfont}{\bfseries\fontsize{14}{17}\selectfont}
+\renewcommand{\cftchappagefont}{\bfseries\fontsize{14}{17}\selectfont}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftchapindent}{0pt}
+\setlength{\cftbeforechapskip}{5pt}
+\renewcommand{\cftsecfont}{\bfseries\fontsize{10}{12}\selectfont}
+\renewcommand{\cftsecpagefont}{\bfseries\fontsize{10}{12}\selectfont}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftsecindent}{14pt}
+\setlength{\cftbeforesecskip}{1pt}
+\renewcommand{\cftsubsecfont}{\fontsize{9}{11}\selectfont}
+\renewcommand{\cftsubsecpagefont}{\fontsize{9}{11}\selectfont}
+\setlength{\cftsubsecindent}{28pt}
+\setlength{\cftbeforesubsecskip}{0.5pt}
+\renewcommand{\cftsubsubsecfont}{\fontsize{9}{11}\selectfont}
+\setlength{\cftsubsubsecindent}{42pt}
+\renewcommand{\cftdotsep}{1}
+\renewcommand{\contentsname}{Mục lục}
+
+% Custom TOC: tocloft's \tableofcontents would not use our chapter heading
+% rules, so typeset the heading ourselves and let \@starttoc read the entries.
+\makeatletter
+\newcommand{\cctableofcontents}{%
+  \cleardoublepage
+  \thispagestyle{plain}%
+  \markboth{\contentsname}{\contentsname}%
+  \@makeschapterhead{\contentsname}%
+  \@starttoc{toc}%
+}
+\makeatother
+
+% ---------------------------------------------------------------------------
+% Hyperref last, no coloured links (the original has none).
+% ---------------------------------------------------------------------------
+\usepackage[hidelinks,bookmarksopen=true,pdfencoding=auto]{hyperref}
+\hypersetup{pdftitle={Kiến trúc sạch: Cẩm nang thực hành về cấu trúc và thiết kế phần mềm},
+  pdfauthor={Robert C. Martin},
+  pdfsubject={Bản dịch tiếng Việt}}
+
+% TOC chapter lines: the original runs "Chapter 1: Clean Architecture" from the left
+% margin instead of aligning the numbers in a column, so we replace
+% \numberline inside \l@chapter and keep the dotted leader to the folio.
+\makeatletter
+\renewcommand{\l@chapter}[2]{%
+  \par\addvspace{5pt}%
+  \begingroup
+  \def\numberline##1{Chương ##1: }%
+  \noindent{\bfseries\fontsize{14}{17}\selectfont #1}%
+  \nobreak\leaders\hbox{\hbox to 4.5pt{\hfil.\hfil}}\hfill\nobreak
+  {\bfseries\fontsize{14}{17}\selectfont #2}%
+  \par\endgroup
+}
+\makeatother
+
+\begin{document}
+
+% ===========================================================================
+% Front matter
+% ===========================================================================
+\frontmatter
+\pagestyle{main}
+
+% --- Title page (Vietnamese title and subtitle) ------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\centering
+\vspace*{58pt}
+{\fontsize{34}{40}\selectfont\bfseries Kiến trúc sạch\par}
+\vspace{16pt}
+{\fontsize{17}{22}\selectfont\itshape Cẩm nang thực hành về cấu trúc\\
+và thiết kế phần mềm\par}
+\vspace{54pt}
+{\fontsize{12}{15}\selectfont Robert C. Martin\par}
+\vfill
+{\fontsize{9.5}{13}\selectfont\itshape
+Kiến trúc phần mềm tốt giúp giảm nỗ lực con người,\\
+tăng năng suất và duy trì khả năng thay đổi trong thời gian dài.\par}
+\vspace{40pt}
+{\fontsize{10}{13}\selectfont Bản dịch tiếng Việt\par}
+\vspace{6pt}
+{\fontsize{9}{11}\selectfont Dùng cho mục đích học tập cá nhân\par}
+\vspace{14pt}
+\end{titlepage}
+
+% --- Trang bản quyền ---
+% Giữ nguyên mã ISBN, địa chỉ và thông tin liên hệ của nhà xuất bản.
+\clearpage
+\thispagestyle{empty}
+\begingroup
+\fontsize{8.5}{10.5}\selectfont
+\setlength{\parindent}{0pt}
+\noindent Nhiều tên gọi mà nhà sản xuất và người bán dùng để phân biệt sản phẩm
+của họ được xác nhận là nhãn hiệu. Khi những tên gọi đó xuất hiện trong sách
+này và nhà xuất bản biết có yêu cầu bảo hộ nhãn hiệu, chúng được in hoa chữ cái
+đầu hoặc viết hoa toàn bộ.\par
+\vspace{5pt}
+\noindent Các tác giả và nhà xuất bản đã cẩn trọng khi biên soạn cuốn sách này,
+nhưng không đưa ra bất kỳ bảo đảm nào, dù rõ ràng hay ngụ ý, và không chịu trách
+nhiệm về sai sót hoặc thiếu sót. Nhà xuất bản cũng không chịu trách nhiệm về
+thiệt hại ngẫu nhiên hay thiệt hại phát sinh từ việc sử dụng thông tin hoặc
+chương trình trong sách này.\par
+\vspace{5pt}
+\noindent Nhà xuất bản có chính sách giảm giá tốt khi đặt mua số lượng lớn hoặc
+đặt mua cho các đợt bán đặc biệt. Đơn hàng có thể bao gồm bản điện tử và/hoặc
+bìa cùng nội dung tùy chỉnh theo doanh nghiệp, mục tiêu đào tạo, định hướng
+tiếp thị và nhận diện thương hiệu của bạn. Để biết thêm thông tin, vui lòng
+liên hệ:\par
+\vspace{3pt}
+\hspace*{20pt}Bộ phận bán hàng doanh nghiệp và chính phủ Hoa Kỳ\\
+\hspace*{20pt}(800) 382-3419\\
+\hspace*{20pt}corpsales@pearsontechgroup.com\par
+\vspace{5pt}
+\noindent Khách hàng ngoài Hoa Kỳ vui lòng liên hệ bộ phận bán hàng quốc tế:\par
+\vspace{3pt}
+\hspace*{20pt}International Sales\\
+\hspace*{20pt}international@pearsoned.com\par
+\vspace{16pt}
+\noindent\rule{\textwidth}{0.5pt}\par
+\vfill
+\noindent Sách có danh mục tài liệu tham khảo và mục lục.\\
+ISBN-13: 978-0-13-449416-6\\
+ISBN-10: \quad 0-13-449416-4\par
+\vspace{5pt}
+\noindent Bản quyền \copyright{} 2018 Pearson Education, Inc.\par
+\vspace{5pt}
+\noindent Bảo lưu mọi quyền. In tại Hoa Kỳ. Ấn phẩm này được bảo hộ bản quyền.
+Trước khi sao chép, lưu trữ trong hệ thống truy xuất hoặc truyền tải dưới bất
+kỳ hình thức hay phương tiện nào, như điện tử, cơ học, photocopy, ghi âm hoặc
+cách thức tương tự, ngoài phạm vi được phép, phải được nhà xuất bản chấp thuận.
+Mọi yêu cầu cấp phép xin gửi đến:\par
+\vspace{3pt}
+\hspace*{20pt}Pearson Education, Inc\\
+\hspace*{20pt}Rights and Contracts Department\\
+\hspace*{20pt}501 Boylston Street, Suite 900\\
+\hspace*{20pt}Boston, MA 02116\\
+\hspace*{20pt}Fax: (617) 671-3447\par
+\vspace{5pt}
+\noindent ISBN-13: 978-0-13-449416-6\\
+ISBN-10: \quad 0-13-449416-4\par
+\vspace{5pt}
+\noindent In trên giấy tái chế tại Courier, Stoughton, Massachusetts, Hoa Kỳ.\par
+\vspace{5pt}
+\noindent Ấn bản đầu tiên, tháng 9 năm 2017\par
+\vspace{12pt}
+\noindent\textit{Bản quyền bản gốc thuộc Pearson Education. Bản dịch này chỉ dùng
+cho mục đích học tập cá nhân.}\par
+\endgroup
+
+% --- Table of contents ------------------------------------------------------
+\cctableofcontents
+
+% --- Foreword, Preface, Acknowledgments, About the Author ------------------
+\input{build/clean-architecture/gen/front.tex}
+
+% ===========================================================================
+% Main matter: chapters 1-34 and Appendix A
+% ===========================================================================
+\mainmatter
+\input{build/clean-architecture/gen/main.tex}
+
+% ===========================================================================
+% Back matter (if any)
+% ===========================================================================
+\backmatter
+\input{build/clean-architecture/gen/back.tex}
+
+\end{document}

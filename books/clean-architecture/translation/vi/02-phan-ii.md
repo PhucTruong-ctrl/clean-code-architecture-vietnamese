@@ -1,0 +1,9 @@
+# Phần II: Bắt đầu từ những viên gạch: Các mô hình lập trình
+
+Kiến trúc phần mềm khởi đầu từ mã nguồn, và vì thế chúng ta sẽ bắt đầu cuộc thảo luận về kiến trúc bằng việc xem xét những gì chúng ta đã học được về mã từ khi mã lần đầu được viết.
+
+Năm 1938, Alan Turing đặt nền móng cho những gì sau này trở thành lập trình máy tính. Ông không phải người đầu tiên nghĩ ra máy có thể lập trình, nhưng ông là người đầu tiên hiểu rằng chương trình đơn giản là dữ liệu. Đến năm 1945, Turing đã viết các chương trình thật trên máy tính thật bằng mã mà chúng ta có thể nhận ra (nếu nhíu mắt đủ lâu). Những chương trình đó dùng vòng lặp, phân nhánh, gán giá trị, thủ tục con, ngăn xếp và các cấu trúc quen thuộc khác. Ngôn ngữ của Turing là nhị phân.
+
+Từ đó đến nay, lập trình đã trải qua nhiều cuộc cách mạng. Cuộc cách mạng quen thuộc nhất là sự ra đời của các ngôn ngữ lập trình. Cuối thập niên 1940, các bộ hợp dịch (assembler) xuất hiện, giải phóng lập trình viên khỏi việc vất vả dịch chương trình sang mã nhị phân. Năm 1951, Grace Hopper phát minh ra A0, bộ biên dịch đầu tiên. Bà cũng đặt ra thuật ngữ *compiler*. Fortran ra đời năm 1953, một năm sau khi tôi sinh. Sau đó là một làn sóng ngôn ngữ lập trình nối tiếp không dứt: COBOL, PL/1, SNOBOL, C, Pascal, C++, Java và nhiều ngôn ngữ khác.
+
+Một cuộc cách mạng khác, có lẽ quan trọng hơn, là sự ra đời của các mô hình lập trình (paradigm). Mô hình lập trình là cách viết chương trình, tương đối độc lập với ngôn ngữ. Nó cho biết nên dùng những cấu trúc lập trình nào và dùng khi nào. Đến nay có ba mô hình như vậy. Vì những lý do sẽ bàn sau, có lẽ không có mô hình nào khác.
