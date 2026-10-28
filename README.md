@@ -1,4 +1,4 @@
-# Vietnamese book-translation workspace
+# clean-code-architecture-translations
 
 This repository contains two independent Vietnamese book translations. Shared build and QA tools live at the root; each book owns its source, Markdown, assets, translation guide, and LaTeX layout under `books/<book-id>/`.
 
