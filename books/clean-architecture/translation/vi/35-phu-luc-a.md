@@ -17,7 +17,7 @@ Như bạn thấy trong ảnh, đây là một cỗ máy khổng lồ.[^1] Nó c
 
 Máy tính này được chế tạo trước thời mạch tích hợp, bằng các transistor rời. Bên trong còn có một số đèn điện tử, nhưng chỉ dùng trong bộ khuếch đại tín hiệu của ổ băng từ.
 
-Theo tiêu chuẩn ngày nay, cỗ máy vừa khổng lồ, vừa chậm, nhỏ và thô sơ. Nó có 16K × 18 bit bộ nhớ lõi, chu kỳ khoảng 7 micro giây.[^2] Máy chiếm một căn phòng lớn được kiểm soát môi trường. Nó có ổ băng từ 7 track và một ổ đĩa dung lượng khoảng 20 megabyte.
+Theo tiêu chuẩn ngày nay, cỗ máy này vừa khổng lồ, vừa chậm, lại có dung lượng bộ nhớ nhỏ và khá thô sơ. Nó có 16K × 18 bit bộ nhớ lõi, chu kỳ khoảng 7 micro giây.[^2] Máy chiếm một căn phòng lớn được kiểm soát môi trường. Nó có ổ băng từ 7 track và một ổ đĩa dung lượng khoảng 20 megabyte.
 
 Ổ đĩa ấy là một con quái vật. Bạn có thể thấy nó trong Hình A.2, nhưng ảnh chưa thể hiện hết kích thước. Đỉnh tủ cao hơn đầu tôi. Các phiến đĩa đường kính 36 inch, dày 3/8 inch. Hình A.3 cho thấy một phiến đĩa.
 

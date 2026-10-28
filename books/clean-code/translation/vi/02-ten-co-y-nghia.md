@@ -300,7 +300,7 @@ Hãy chọn một từ cho mỗi khái niệm trừu tượng rồi dùng nhất
 
 Các môi trường soạn thảo hiện đại như Eclipse và IntelliJ cung cấp gợi ý theo ngữ cảnh, chẳng hạn danh sách phương thức có thể gọi trên một đối tượng. Nhưng danh sách ấy thường không hiển thị chú thích bạn viết quanh tên hàm và danh sách tham số. May ra nó cho thấy tên tham số trong khai báo hàm. Tên hàm phải tự đứng vững và nhất quán để bạn chọn đúng phương thức mà không cần tìm hiểu thêm.
 
-Tương tự, thật khó hiểu khi cùng một code base có controller, manager và driver. Khác biệt cốt yếu giữa DeviceManager và ProtocolController là gì? Sao cả hai không cùng là controller hoặc cùng là manager? Thật ra chúng có phải đều là Driver không? Tên gọi khiến bạn nghĩ hai đối tượng khác xa nhau về kiểu lẫn lớp.
+Tương tự, thật khó hiểu khi trong cùng một dự án có controller, manager và driver. Khác biệt cốt yếu giữa DeviceManager và ProtocolController là gì? Sao cả hai không cùng là controller hoặc cùng là manager? Thật ra chúng có phải đều là Driver không? Tên gọi khiến bạn nghĩ hai đối tượng khác xa nhau về kiểu lẫn lớp.
 
 Từ vựng nhất quán là món quà lớn dành cho những lập trình viên phải dùng mã của bạn.
 

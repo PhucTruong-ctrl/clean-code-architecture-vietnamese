@@ -38,9 +38,9 @@ Tôi thường thấy các nhóm phát triển nhận ra mình gặp vấn đề
 
 ## Cổng và bộ chuyển đổi
 
-Như Uncle Bob đã nói, các cách tiếp cận như “cổng và bộ chuyển đổi”, “kiến trúc lục giác”, “ranh giới, controller, entity” và những cách tương tự nhằm tạo kiến trúc trong đó mã tập trung vào nghiệp vụ hoặc miền được tách biệt và độc lập với chi tiết triển khai kỹ thuật như framework và cơ sở dữ liệu. Tóm lại, ta thường thấy các codebase được chia thành phần “bên trong” (miền) và phần “bên ngoài” (hạ tầng), như Hình 34.3 gợi ý.
+Như Uncle Bob đã nói, các cách tiếp cận như “cổng và bộ chuyển đổi”, “kiến trúc lục giác”, “ranh giới, controller, entity” và những cách tương tự nhằm tạo kiến trúc trong đó mã tập trung vào nghiệp vụ hoặc miền được tách biệt và độc lập với chi tiết triển khai kỹ thuật như framework và cơ sở dữ liệu. Tóm lại, ta thường thấy mã nguồn được chia thành phần “bên trong” (miền) và phần “bên ngoài” (hạ tầng), như Hình 34.3 gợi ý.
 
-**Hình 34.3** Codebase có phần bên trong và bên ngoài
+**Hình 34.3** Mã nguồn có phần bên trong và bên ngoài
 
 Vùng “bên trong” chứa mọi khái niệm miền, còn vùng “bên ngoài” chứa các tương tác với thế giới bên ngoài, chẳng hạn giao diện người dùng, cơ sở dữ liệu và tích hợp bên thứ ba. Quy tắc chính là phần “bên ngoài” phụ thuộc vào phần “bên trong”, không bao giờ ngược lại. Hình 34.4 cho thấy một phiên bản triển khai ca sử dụng “xem đơn hàng”.
 
@@ -56,13 +56,13 @@ Dù hoàn toàn đồng ý với các thảo luận về SOLID, REP, CCP và CRP
 
 Tôi đã nêu vài lý do nên xem kiến trúc phân lớp là không tốt, nhưng đó chưa phải toàn bộ câu chuyện. Mục đích của kiến trúc phân lớp là tách mã có cùng chức năng. Phần web được tách khỏi logic nghiệp vụ, rồi logic nghiệp vụ được tách khỏi truy cập dữ liệu. Như ta thấy trong sơ đồ lớp UML, khi triển khai, một lớp thường tương ứng với một Java package. Để `OrdersController` có thể phụ thuộc vào giao diện `OrdersService`, giao diện này phải được đánh dấu `public` vì chúng nằm trong các package khác nhau. Tương tự, giao diện `OrdersRepository` phải là `public` để lớp `OrdersServiceImpl` có thể truy cập từ ngoài package repository.
 
-Trong kiến trúc phân lớp nghiêm ngặt, các mũi tên phụ thuộc luôn phải hướng xuống, mỗi lớp chỉ phụ thuộc vào lớp liền kề bên dưới. Điều này giúp tạo đồ thị phụ thuộc không chu trình gọn gàng, đạt được bằng cách đặt quy tắc về cách các thành phần trong codebase được phép phụ thuộc nhau. Vấn đề lớn là ta có thể gian lận bằng cách tạo phụ thuộc không mong muốn mà vẫn giữ được một đồ thị phụ thuộc không chu trình.
+Trong kiến trúc phân lớp nghiêm ngặt, các mũi tên phụ thuộc luôn phải hướng xuống, mỗi lớp chỉ phụ thuộc vào lớp liền kề bên dưới. Điều này giúp tạo đồ thị phụ thuộc không chu trình gọn gàng, đạt được bằng cách đặt quy tắc về cách các thành phần trong mã nguồn được phép phụ thuộc nhau. Vấn đề lớn là ta có thể gian lận bằng cách tạo phụ thuộc không mong muốn mà vẫn giữ được một đồ thị phụ thuộc không chu trình.
 
 Giả sử bạn tuyển một người mới vào nhóm và giao cho họ triển khai một ca sử dụng khác liên quan đến đơn hàng. Vì mới vào nhóm, người đó muốn gây ấn tượng và hoàn thành ca sử dụng thật nhanh. Sau vài phút ngồi uống cà phê, họ tìm thấy lớp `OrdersController` hiện có và quyết định đặt mã cho trang web mới liên quan đến đơn hàng vào đó. Nhưng trang cần dữ liệu đơn hàng từ cơ sở dữ liệu. Người mới chợt nghĩ ra: “Ồ, đã có giao diện `OrdersRepository` rồi. Mình chỉ cần tiêm phần triển khai vào controller là xong!” Vài phút sau, trang web hoạt động. Nhưng sơ đồ UML thu được trông như Hình 34.5.
 
 Các mũi tên phụ thuộc vẫn hướng xuống, nhưng giờ `OrdersController` bỏ qua `OrdersService` trong một số ca sử dụng. Cách tổ chức này thường gọi là kiến trúc phân lớp lỏng, trong đó một lớp được phép bỏ qua các lớp liền kề. Trong một số tình huống đây là kết quả có chủ ý, chẳng hạn khi áp dụng mẫu CQRS.[^5] Trong nhiều trường hợp khác, bỏ qua lớp logic nghiệp vụ là điều không mong muốn, nhất là khi lớp này chịu trách nhiệm bảo đảm quyền truy cập vào từng bản ghi.
 
-Ca sử dụng mới hoạt động, nhưng có lẽ không được triển khai như ta kỳ vọng. Tôi thường thấy điều này ở các nhóm tư vấn, và thường chỉ lộ ra khi nhóm lần đầu hình dung được cấu trúc thực sự của codebase.
+Ca sử dụng mới hoạt động, nhưng có lẽ không được triển khai như ta kỳ vọng. Tôi thường thấy điều này ở các nhóm tư vấn, và thường chỉ lộ ra khi nhóm lần đầu hình dung được cấu trúc thực sự của mã nguồn.
 
 **Hình 34.5** Kiến trúc phân lớp lỏng
 
@@ -70,7 +70,7 @@ Ca sử dụng mới hoạt động, nhưng có lẽ không được triển kha
 
 Một số ít nhóm khác cho biết họ dùng công cụ phân tích tĩnh, chẳng hạn NDepend, Structure101 và Checkstyle, để phát hiện và tự động thực thi các vi phạm kiến trúc trong lúc build. Có thể bạn từng thấy các quy tắc như vậy. Chúng thường là biểu thức chính quy hoặc chuỗi ký tự đại diện, quy định rằng “kiểu trong package `**/web` không được truy cập kiểu trong `**/data`”, rồi được chạy sau bước biên dịch.
 
-Cách tiếp cận này hơi thô sơ nhưng có thể hiệu quả. Nó báo cáo các vi phạm nguyên tắc kiến trúc do nhóm xác định và, hy vọng, làm build thất bại. Vấn đề của cả hai cách là chúng có thể sai sót, và vòng phản hồi dài hơn mức cần thiết. Nếu không kiểm soát, codebase có thể biến thành “quả cầu bùn lớn”.[^6] Nếu có thể, cá nhân tôi muốn dùng trình biên dịch để thực thi kiến trúc.
+Cách tiếp cận này hơi thô sơ nhưng có thể hiệu quả. Nó báo cáo các vi phạm nguyên tắc kiến trúc do nhóm xác định và, hy vọng, làm build thất bại. Vấn đề của cả hai cách là chúng có thể sai sót, và vòng phản hồi dài hơn mức cần thiết. Nếu không kiểm soát, mã nguồn có thể biến thành “quả cầu bùn lớn”.[^6] Nếu có thể, cá nhân tôi muốn dùng trình biên dịch để thực thi kiến trúc.
 
 Đó là lúc đến với lựa chọn “chia gói theo thành phần”. Đây là cách tiếp cận lai, kết hợp những gì đã thấy, nhằm gom mọi trách nhiệm liên quan đến một thành phần có độ hạt lớn vào một Java package. Cách này nhìn hệ thống theo hướng lấy dịch vụ làm trung tâm, cũng là điều ta thấy trong kiến trúc vi dịch vụ. Giống như cổng và bộ chuyển đổi xem web chỉ là một cơ chế phân phối khác, “chia gói theo thành phần” vẫn tách giao diện người dùng khỏi các thành phần có độ hạt lớn đó. Hình 34.6 cho thấy một cách triển khai ca sử dụng “xem đơn hàng”.
 
@@ -88,11 +88,11 @@ Lợi ích chính của cách “chia gói theo thành phần” là nếu viế
 
 Thoạt nhìn, cả bốn cách tiếp cận đều có vẻ là những cách tổ chức mã khác nhau, nên có thể được xem là các kiểu kiến trúc khác nhau. Nhưng nhận định này nhanh chóng sụp đổ nếu triển khai sai chi tiết.
 
-Tôi thường xuyên thấy người ta dùng quá thoải mái từ bổ nghĩa truy cập `public` trong các ngôn ngữ như Java. Có vẻ như lập trình viên dùng từ khóa `public` theo bản năng, không cần suy nghĩ. Nó đã thành phản xạ. Nếu không tin, hãy xem các mẫu mã trong sách, hướng dẫn và framework mã nguồn mở trên GitHub. Xu hướng này xuất hiện bất kể codebase hướng đến kiểu kiến trúc nào: lớp ngang, lớp dọc, cổng và bộ chuyển đổi hay kiểu khác. Đánh dấu mọi kiểu là `public` nghĩa là bạn không tận dụng các cơ chế đóng gói mà ngôn ngữ lập trình cung cấp. Trong một số trường hợp, không có gì ngăn ai đó viết mã khởi tạo trực tiếp một lớp triển khai cụ thể, vi phạm kiến trúc dự định.
+Tôi thường xuyên thấy người ta dùng quá thoải mái từ bổ nghĩa truy cập `public` trong các ngôn ngữ như Java. Có vẻ như lập trình viên dùng từ khóa `public` theo bản năng, không cần suy nghĩ. Nó đã thành phản xạ. Nếu không tin, hãy xem các mẫu mã trong sách, hướng dẫn và framework mã nguồn mở trên GitHub. Xu hướng này xuất hiện bất kể mã nguồn hướng đến kiểu kiến trúc nào: lớp ngang, lớp dọc, cổng và bộ chuyển đổi hay kiểu khác. Đánh dấu mọi kiểu là `public` nghĩa là bạn không tận dụng các cơ chế đóng gói mà ngôn ngữ lập trình cung cấp. Trong một số trường hợp, không có gì ngăn ai đó viết mã khởi tạo trực tiếp một lớp triển khai cụ thể, vi phạm kiến trúc dự định.
 
 ## Tổ chức và đóng gói
 
-Nhìn vấn đề theo cách khác, nếu mọi kiểu trong ứng dụng Java đều là `public`, package chỉ còn là cơ chế tổ chức, một cách nhóm như thư mục, chứ không còn dùng để đóng gói. Vì kiểu `public` có thể được dùng ở bất kỳ đâu trong codebase, bạn có thể bỏ qua package vì chúng hầu như không đem lại giá trị thực. Kết quả là nếu bỏ qua package vì chúng không cung cấp cách đóng gói và che giấu, thì kiểu kiến trúc bạn muốn tạo ra cũng không còn quan trọng. Nhìn lại các sơ đồ UML, package Java trở thành chi tiết không liên quan nếu mọi kiểu đều được đánh dấu `public`. Về bản chất, cả bốn cách tiếp cận kiến trúc ở trên đều giống nhau khi lạm dụng từ bổ nghĩa này (Hình 34.7).
+Nhìn vấn đề theo cách khác, nếu mọi kiểu trong ứng dụng Java đều là `public`, package chỉ còn là cơ chế tổ chức, một cách nhóm như thư mục, chứ không còn dùng để đóng gói. Vì kiểu `public` có thể được dùng ở bất kỳ đâu trong mã nguồn, bạn có thể bỏ qua package vì chúng hầu như không đem lại giá trị thực. Kết quả là nếu bỏ qua package vì chúng không cung cấp cách đóng gói và che giấu, thì kiểu kiến trúc bạn muốn tạo ra cũng không còn quan trọng. Nhìn lại các sơ đồ UML, package Java trở thành chi tiết không liên quan nếu mọi kiểu đều được đánh dấu `public`. Về bản chất, cả bốn cách tiếp cận kiến trúc ở trên đều giống nhau khi lạm dụng từ bổ nghĩa này (Hình 34.7).
 
 Hãy xem kỹ các mũi tên giữa các kiểu trong Hình 34.7. Chúng đều giống nhau bất kể bạn đang theo kiểu kiến trúc nào. Về khái niệm, các cách tiếp cận rất khác nhau, nhưng về cú pháp lại giống hệt. Hơn nữa, có thể lập luận rằng nếu mọi kiểu đều `public`, thì thực chất bạn chỉ có bốn cách mô tả kiến trúc phân lớp ngang truyền thống. Đây là một thủ thuật thú vị. Dĩ nhiên, không ai lại đánh dấu mọi kiểu Java là `public`. Trừ những lúc họ làm vậy. Tôi đã thấy chuyện đó.
 

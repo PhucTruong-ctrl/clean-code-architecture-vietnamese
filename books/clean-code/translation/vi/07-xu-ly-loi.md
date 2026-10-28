@@ -4,9 +4,9 @@
 
 Có vẻ lạ khi một cuốn sách về mã sạch lại có một mục bàn về xử lý lỗi. Xử lý lỗi chỉ là một trong những việc ai cũng phải làm khi lập trình. Đầu vào có thể bất thường và thiết bị có thể hỏng. Nói ngắn gọn, mọi thứ đều có thể sai, và khi sai, chúng ta, những lập trình viên, phải chịu trách nhiệm bảo đảm mã của mình vẫn làm được việc nó cần làm.
 
-Tuy vậy, mối liên hệ với mã sạch hẳn phải rõ. Nhiều code base bị xử lý lỗi chi phối hoàn toàn. Khi nói chi phối, tôi không có ý rằng chúng chỉ làm mỗi việc xử lý lỗi. Ý tôi là gần như không thể thấy code làm gì, vì xử lý lỗi nằm rải rác khắp nơi. Xử lý lỗi quan trọng, nhưng nếu nó che khuất logic thì là sai.
+Tuy vậy, mối liên hệ với mã sạch hẳn phải rõ. Nhiều dự án có mã nguồn bị xử lý lỗi chi phối hoàn toàn. Nói vậy không có nghĩa chúng chỉ làm mỗi việc xử lý lỗi. Ý tôi là xử lý lỗi rải rác khắp nơi, khiến gần như không thể thấy phần mã còn lại làm gì. Xử lý lỗi quan trọng, nhưng nếu nó che khuất logic thì là sai.
 
-Trong chương này, tôi sẽ phác ra một số kỹ thuật và điều cần cân nhắc để bạn viết được thứ code vừa sạch vừa vững chắc, thứ code xử lý lỗi một cách thanh thoát và có phong độ.
+Trong chương này, tôi sẽ trình bày một số kỹ thuật và điều cần cân nhắc để bạn viết mã vừa sạch vừa vững chắc, xử lý lỗi gọn gàng và tinh tế.
 
 ## Dùng ngoại lệ thay cho mã lỗi
 
@@ -286,7 +286,7 @@ public void registerItem(Item item) {
 }
 ```
 
-Nếu bạn làm việc trong một code base có kiểu code như thế này, nó có thể trông không đến nỗi tệ với bạn, nhưng nó tệ thật! Khi trả về null, thật ra ta đang tự tạo việc cho mình và đẩy rắc rối về phía bên gọi. Chỉ cần một phép kiểm tra null bị thiếu là đủ khiến ứng dụng quay cuồng mất kiểm soát.
+Nếu bạn làm việc trong một dự án có đoạn mã như thế này, thoạt nhìn nó có thể không đến nỗi tệ. Nhưng thật ra, nó rất tệ! Khi trả về `null`, ta tự tạo thêm việc cho mình và đẩy rắc rối về phía bên gọi. Chỉ cần thiếu một phép kiểm tra `null` là ứng dụng có thể mất kiểm soát.
 
 Bạn có để ý rằng dòng thứ hai của câu lệnh if lồng nhau đó không có phép kiểm tra null không? Điều gì sẽ xảy ra lúc chạy nếu persistentStore là null? Chúng ta sẽ nhận một NullPointerException lúc chạy, và hoặc có ai đó bắt NullPointerException ở tầng cao nhất, hoặc không. Kiểu nào cũng tệ. Chính xác thì bạn nên làm gì khi nhận một NullPointerException ném ra từ sâu trong ứng dụng của mình?
 

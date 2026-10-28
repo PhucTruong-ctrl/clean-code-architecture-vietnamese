@@ -1,4 +1,4 @@
-# Chương 14: Sự kết nối giữa các thành phần
+# Chương 14: Mức độ liên kết giữa các thành phần
 ![Minh họa](assets/illustrations/14-chuong-14-opener.png){w=300}
 
 Ba nguyên tắc tiếp theo liên quan đến các mối quan hệ giữa các thành phần. Ở đây chúng ta lại gặp phải sự căng thẳng giữa khả năng phát triển và thiết kế logic. Các lực tác động lên kiến trúc của một cấu trúc thành phần mang tính kỹ thuật, chính trị và biến động.

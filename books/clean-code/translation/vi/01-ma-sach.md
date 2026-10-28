@@ -46,15 +46,15 @@ Mớ hỗn độn càng lớn, năng suất của nhóm càng giảm, dần ti�
 **Hình 1-1**
 *Năng suất theo thời gian*
 
-### Cuộc đại tái thiết kế trên trời
+### Đại dự án tái thiết kế viển vông
 
-Cuối cùng, nhóm nổi loạn. Họ báo với ban quản lý rằng không thể tiếp tục phát triển trên code base đáng ghét này và đòi thiết kế lại. Ban quản lý không muốn bỏ nguồn lực vào việc thiết kế lại toàn bộ dự án, nhưng cũng không thể phủ nhận năng suất đang rất tệ. Cuối cùng, họ nhượng bộ trước yêu cầu của các nhà phát triển và phê duyệt cuộc đại tái thiết kế trên trời.
+Rốt cuộc, nhóm nổi loạn. Họ báo với ban quản lý rằng không thể tiếp tục phát triển dựa trên mớ mã nguồn đáng ghét này và yêu cầu thiết kế lại. Ban quản lý không muốn dồn nguồn lực vào việc làm lại toàn bộ dự án, nhưng cũng không thể phủ nhận năng suất đã sa sút nghiêm trọng. Sau cùng, họ chấp thuận yêu cầu của các nhà phát triển và bật đèn xanh cho cuộc tái thiết kế quy mô lớn ấy.
 
-Một nhóm hổ mới được chọn. Ai cũng muốn vào nhóm này vì đây là dự án bắt đầu từ đầu. Họ được làm lại và tạo ra một thứ thật sự đẹp. Nhưng chỉ những người giỏi nhất và sáng giá nhất được chọn. Những người còn lại phải tiếp tục bảo trì hệ thống hiện tại.
+Một nhóm tinh nhuệ mới được chọn. Ai cũng muốn tham gia vì đây là dự án bắt đầu từ đầu, một cơ hội làm lại mọi thứ và tạo ra sản phẩm thật sự tốt. Nhưng chỉ những người giỏi và xuất sắc nhất được chọn vào nhóm. Những người còn lại phải tiếp tục bảo trì hệ thống hiện tại.
 
-Giờ hai nhóm chạy đua. Nhóm hổ phải xây dựng hệ thống mới có đủ mọi chức năng của hệ thống cũ. Họ còn phải theo kịp những thay đổi liên tục được đưa vào hệ thống cũ. Ban quản lý sẽ không thay hệ thống cũ cho đến khi hệ thống mới làm được mọi thứ mà hệ thống cũ làm.
+Giờ hai nhóm chạy đua. Nhóm tinh nhuệ phải xây dựng hệ thống mới có đủ mọi chức năng của hệ thống cũ. Họ còn phải theo kịp những thay đổi liên tục được đưa vào hệ thống cũ. Ban quản lý sẽ không thay hệ thống cũ cho đến khi hệ thống mới làm được mọi thứ mà hệ thống cũ làm.
 
-Cuộc đua ấy có thể kéo dài rất lâu. Tôi từng thấy nó mất 10 năm. Đến khi hoàn tất, những thành viên ban đầu của nhóm hổ đã rời đi từ lâu, còn các thành viên hiện tại lại đòi thiết kế lại hệ thống mới vì nó quá bừa bộn.
+Cuộc đua ấy có thể kéo dài rất lâu. Tôi từng thấy nó mất 10 năm. Đến khi hoàn tất, những thành viên ban đầu của nhóm tinh nhuệ đã rời đi từ lâu, còn các thành viên hiện tại lại đòi thiết kế lại hệ thống mới vì nó quá bừa bộn.
 
 Nếu từng trải qua dù chỉ một phần nhỏ của câu chuyện này, bạn hẳn đã hiểu rằng dành thời gian giữ code sạch không chỉ có lợi về chi phí, mà còn là chuyện sống còn trong nghề.
 
